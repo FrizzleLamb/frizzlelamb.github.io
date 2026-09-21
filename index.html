@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+   ===================================================================
+   👋 HI THERE CURIOUS PERSON! 
+   If you're inspecting the source code, please disregard any 
+   // OR <!-- > OR /* */ comment blocks! They are personal notes 
+   and workflow memos I leave behind while building my website.
+   ===================================================================
+-->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -16,9 +24,53 @@
 <meta name="twitter:description" content="commission me please">
 <meta name="twitter:image" content="https://frizzlelamb.github.io/preview.png">
 <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
   :root {
     --font-main: "Comic Relief", "Comic Sans MS", "Comic Sans", sans-serif;
+
+    --ink: #142019;
+    --ink-soft: #3e4e45;
+    --ink-light: #7a9a84;
+    --paper: #eef4ef;
+    --paper-shade: #dbe6dd;
+    --paper-dots: #c9d7cd;
+    --link-hover: #33805f; 
+    --overlay: rgba(20, 32, 25, 0.4);   /* dim layer behind popups */
+
+    --page: var(--paper);
+    --page-shade: var(--paper-shade);
+    --page-dots: var(--paper-dots);
+
+    --wobble-a: 14px 5px 13px 6px / 6px 13px 5px 14px;
+    --wobble-b: 6px 13px 5px 14px / 13px 6px 14px 5px;
+    --wobble-big: 20px 8px 18px 9px / 9px 18px 8px 20px;
+    --wobble-sm-a: 9px 4px 10px 5px / 5px 10px 4px 9px;
+    --wobble-sm-b: 4px 9px 5px 10px / 10px 5px 9px 4px;
+
+    --soft-shadow: 0 2px 5px rgba(20, 32, 25, 0.12);
+
+    /* hover = pencil hatching */
+    --hatch-line: rgba(20, 32, 25, 0.2);
+    --hatch: repeating-linear-gradient(135deg, transparent 0 5px, var(--hatch-line) 5px 6.5px);
+  }
+
+  /* night mode colors */
+  :root[data-theme="night"] {
+    color-scheme: dark;
+    --ink: #d8efe9;
+    --ink-soft: #a3c7c0;
+    --ink-light: #5a8b90;
+    --paper: #181d1c;
+    --paper-shade: #0b1c20;
+    --paper-dots: #1d3c43;
+    --link-hover: #7fd4b6;
+    --overlay: rgba(3, 12, 15, 0.55);
+    --hatch-line: rgba(216, 239, 233, 0.16);
+    /* night background */
+    --page: #1b2122;
+    --page-shade: #293133;
+    --page-dots: #384245;
   }
   * {
     box-sizing: border-box;
@@ -35,30 +87,66 @@
     margin: 0;
     padding: 32px 16px 80px;
     background-image:
-      radial-gradient(#6fd4c7 15%, transparent 16%),
-      radial-gradient(ellipse 120% 20% at bottom, #5cc9bb 0%, transparent 100%);
+      radial-gradient(var(--page-dots) 15%, transparent 16%),
+      radial-gradient(ellipse 120% 20% at bottom, var(--page-shade) 0%, transparent 100%);
     background-size: 40px 40px, 100% 100%;
-    background-position: 0 0, 0 0;
-    background-color: #83E1D7;
+    background-color: var(--page);
     background-attachment: fixed;
     transition: background-position 0.2s ease-out;
     gap: 40px;
     font-family: var(--font-main);
+    color: var(--ink);
   }
+  :focus-visible {
+    outline: 3px dashed var(--ink);
+    outline-offset: 4px;
+  }
+
+  /* all text links look the same. always keep this above the link buttons so they can override it */
+  a {
+    color: var(--ink);
+    text-decoration: underline wavy var(--ink-light); /* soft so it doesn't fight the letters */
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    transition: color 0.15s, text-decoration-color 0.15s;
+  }
+  a:hover {
+    color: var(--link-hover);
+    text-decoration-color: currentColor;
+  }
+
   .header {
     text-align: center;
+  }
+  .avatar-btn {
+    display: block;
+    margin: 0 auto 14px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .avatar {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    background-color: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 50% 47% 52% 48% / 48% 52% 47% 50%;
+    box-shadow: var(--soft-shadow);
   }
   .header h1 {
     margin: 0;
     font-size: 52px;
-    color: #063B26;
+    transform: rotate(-1deg);
   }
   .header p {
     margin: 10px auto 0;
     max-width: 560px;
     font-size: 22px;
     line-height: 1.35;
-    color: #063B26;
   }
   .links-section {
     display: flex;
@@ -75,7 +163,6 @@
   }
   .link-group span.label {
     font-size: 19px;
-    color: #063B26;
     font-weight: bold;
     letter-spacing: 0.5px;
   }
@@ -86,63 +173,55 @@
     gap: 14px;
   }
 
+  /* link buttons */
   .link-row a {
     text-decoration: none;
-    color: #6b5423;
-    background: #fdf6e3;
-    border: 2px solid #e8c873;
-    border-radius: 12px;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: var(--wobble-a);
     padding: 10px 24px;
     font-size: 18px;
     font-weight: bold;
-    font-family: inherit;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(6, 59, 38, 0.10);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s, border-color 0.15s;
+    box-shadow: var(--soft-shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .link-row a:nth-child(even) {
+    border-radius: var(--wobble-b);
   }
   .link-row a:hover {
-    background: #f7ecc8;
-    border-color: #d4a017;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(6, 59, 38, 0.14);
+    background-image: var(--hatch);
+    transform: translateY(-2px) rotate(-1deg);
+    box-shadow: 0 4px 8px rgba(20, 32, 25, 0.16);
   }
   .link-row a:active {
     transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(6, 59, 38, 0.10);
+    box-shadow: 0 1px 3px rgba(20, 32, 25, 0.12);
   }
-  .link-row a:focus-visible {
-    outline: 3px solid #063B26;
-    outline-offset: 4px;
-  }
-  /* commission links get the golden "do it" button look */
   .link-group.commission .link-row a {
-    background: #f2dd97;
-    border-color: #d4a017;
-    color: #4a3a10;
+    background-color: var(--ink);
+    color: var(--paper);
   }
-  .link-group.commission .link-row a:hover {
-    background: #e8c873;
-  }
- 
-  /* ===== end link buttons ===== */
+
   .divider {
     width: 100%;
     max-width: 640px;
+    margin: 0;
     border: none;
-    border-top: 2px dashed #5cb8a9;
-    opacity: 0.6;
+    border-top: 2px dashed var(--ink);
   }
 
-  /* row of icon buttons (faq / note / emoji) */
+  /* row of icon buttons (faq / note / emoji wall) */
   .icon-row {
     display: flex;
-    gap: 4px;
+    gap: 6px;
     align-items: center;
     justify-content: center;
   }
   .donut-toggle {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     background: none;
     border: none;
     display: flex;
@@ -150,21 +229,56 @@
     justify-content: center;
     cursor: pointer;
     padding: 0;
-    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    color: var(--ink);
+    border-radius: 48% 52% 45% 55% / 55% 45% 52% 48%;
+    transition: transform 0.15s, background-color 0.15s, color 0.15s;
   }
   .donut-toggle:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(-4deg);
   }
-  .donut-toggle .emoji {
-    font-size: 32px;
-    line-height: 1;
+  .donut-toggle[aria-pressed="true"] {
+    background-color: var(--ink);
+    color: var(--paper);
+  }
+  .donut-toggle[aria-pressed="true"] img {
+    filter: invert(1);
+  }
+  /* night mode */
+  :root[data-theme="night"] img.icon {
+    filter: invert(1);
+  }
+  :root[data-theme="night"] .donut-toggle[aria-pressed="true"] img {
+    filter: none;
+  }
+
+  /* the svg doodles are placeholders, real pngs from /icons win when they load */
+  .icon {
+    width: 34px;
+    height: 34px;
     display: block;
+    object-fit: contain;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-inline {
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: -0.25em;
+    stroke-width: 3.4;
+  }
+  /* png is there -> hide the doodle sitting next to it */
+  img.icon + svg.icon {
+    display: none;
   }
 
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(6, 40, 30, 0.35);
+    background: var(--overlay);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -184,11 +298,11 @@
     max-width: 650px;
     max-height: 85vh;
     overflow-y: auto;
-    background: #fdf6e3;
-    border: 2px solid #e8c873;
-    border-radius: 14px;
+    background: var(--paper);
+    border: 2.5px solid var(--ink);
+    border-radius: var(--wobble-big);
     padding: 28px 20px 20px;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 32px rgba(20, 32, 25, 0.28);
     transform: scale(0.96);
     transition: transform 0.18s ease;
   }
@@ -201,6 +315,9 @@
   .faq-modal {
     max-width: 600px;
   }
+  .credits-modal {
+    max-width: 480px;
+  }
   .modal-close {
     position: absolute;
     top: 10px;
@@ -209,18 +326,18 @@
     border: none;
     font-size: 20px;
     line-height: 1;
-    color: #6b5423;
+    color: var(--ink);
     cursor: pointer;
     padding: 4px;
+    transition: transform 0.15s;
   }
   .modal-close:hover {
-    color: #4a3a10;
+    transform: rotate(90deg);
   }
   .modal-title {
     text-align: center;
     font-weight: bold;
     font-size: 15px;
-    color: #6b5423;
     margin: 0 0 16px;
   }
   .panel-content {
@@ -253,7 +370,6 @@
     border-radius: 50%;
     background: #f2b070;
     box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.25);
-    position: relative;
   }
   #frosting-svg {
     position: absolute;
@@ -268,7 +384,6 @@
     height: 17px;
     border-radius: 2px;
     pointer-events: none;
-    transform-origin: center;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
   .sprinkle.dot {
@@ -294,7 +409,6 @@
   }
   .control-group span.label {
     font-size: 13px;
-    color: #6b5423;
     font-weight: bold;
   }
   .control-group .label-row {
@@ -306,7 +420,7 @@
   .clear-mini-btn {
     font-size: 12px;
     font-weight: bold;
-    color: #c0392b;
+    color: var(--ink);
     background: none;
     border: none;
     cursor: pointer;
@@ -315,27 +429,31 @@
     text-decoration: underline;
   }
   .clear-mini-btn:hover {
-    color: #8e2a1f;
+    text-decoration-style: wavy;
   }
+  /* donut options */
   button.option-btn {
     padding: 6px 12px;
-    border: 2px solid #e8c873;
-    border-radius: 6px;
-    background: #fff;
-    color: #6b5423;
+    border: 2px solid var(--ink-light);
+    border-radius: var(--wobble-sm-a);
+    background-color: var(--paper);
+    color: var(--ink);
     cursor: pointer;
     font-size: 13px;
     font-family: inherit;
     width: 100%;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  button.option-btn:nth-of-type(even) {
+    border-radius: var(--wobble-sm-b);
   }
   button.option-btn:hover {
-    background: #f7ecc8;
+    background-image: var(--hatch);
   }
   button.option-btn.active {
-    border-color: #d4a017;
-    background: #f2dd97;
-    color: #4a3a10;
+    border-color: var(--ink);
+    background-color: var(--ink);
+    color: var(--paper);
     font-weight: bold;
   }
 
@@ -346,14 +464,13 @@
     gap: 8px;
   }
   .faq-item {
-    background: #fffaf0;
-    border: 2px solid #e8c873;
-    border-radius: 10px;
+    border: 2px solid var(--ink-light);
+    border-radius: 10px 5px 11px 6px / 6px 11px 5px 10px;
     overflow: hidden;
-    transition: border-color 0.15s;
+    transition: background-color 0.3s, border-color 0.3s;
   }
-  .faq-item.open {
-    border-color: #d4a017;
+  .faq-item:nth-child(even) {
+    border-radius: 5px 11px 6px 10px / 11px 6px 10px 5px;
   }
   .faq-q {
     width: 100%;
@@ -367,13 +484,12 @@
     font-family: inherit;
     font-size: 14px;
     font-weight: bold;
-    color: #6b5423;
+    color: var(--ink);
     text-align: left;
     cursor: pointer;
-    transition: background 0.15s;
   }
   .faq-q:hover {
-    background: #f7ecc8;
+    background-image: var(--hatch);
   }
   .faq-arrow {
     font-size: 12px;
@@ -403,7 +519,6 @@
     padding: 0 12px 12px;
     font-size: 13px;
     line-height: 1.5;
-    color: #4a3a10;
   }
 
   /* the secret donut maker compartment */
@@ -441,31 +556,64 @@
   .secret-panel {
     margin: 4px 12px 12px;
     padding-top: 16px;
-    border-top: 2px dashed #e8c873;
+    border-top: 2px dashed var(--ink-light);
+  }
+
+  /* secret unlocked */
+  .faq-item.unlocked {
+    background: #fffaf0;
+    border-color: #e8c873;
+  }
+  .faq-item.unlocked.open {
+    border-color: #d4a017;
+  }
+  .faq-item.unlocked .faq-q {
+    color: #6b5423;
+  }
+  .faq-item.unlocked .faq-q:hover {
+    background-color: #f7ecc8;
+    background-image: none;
+  }
+  .faq-item.unlocked .faq-a {
+    color: #6b5423;
+  }
+  .faq-item.unlocked .faq-a p {
+    color: #4a3a10;
+  }
+  .faq-item.unlocked .secret-panel {
+    border-top-color: #e8c873;
+  }
+  .faq-item.unlocked button.option-btn {
+    border-color: #e8c873;
+    background-color: #fff;
+    color: #6b5423;
+  }
+  .faq-item.unlocked button.option-btn:hover {
+    background-color: #f7ecc8;
+    background-image: none;
+  }
+  .faq-item.unlocked button.option-btn.active {
+    border-color: #d4a017;
+    background-color: #f2dd97;
+    color: #4a3a10;
+  }
+  .faq-item.unlocked .clear-mini-btn {
+    color: #c0392b;
+  }
+  .faq-item.unlocked .clear-mini-btn:hover {
+    color: #8e2a1f;
+    text-decoration-style: solid;
   }
 
   /* note popup */
   .send-section {
-    width: 100%;
-    max-width: 420px;
-    margin: 24px auto 0;
-    border-top: 2px dashed #e8c873;
-    padding-top: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     align-items: center;
-  }
-  .note-modal .send-section {
-    max-width: 100%;
-    margin: 0 auto;
-    border-top: none;
-    padding: 0;
     gap: 12px;
   }
   .send-section span.label {
     font-size: 15px;
-    color: #6b5423;
     font-weight: bold;
     text-align: center;
     line-height: 1.4;
@@ -474,34 +622,33 @@
     width: 100%;
     min-height: 110px;
     resize: vertical;
-    border: 2px solid #e8c873;
-    border-radius: 10px;
+    border: 2px solid var(--ink-light);
+    border-radius: 10px 5px 11px 6px / 6px 11px 5px 10px;
     padding: 10px 12px;
     font-family: inherit;
     font-size: 14px;
     line-height: 1.4;
-    color: #4a3a10;
-    background: #fffaf0;
+    color: var(--ink);
+    background: var(--paper);
   }
-  #note-textarea:focus {
-    outline: none;
-    border-color: #d4a017;
+  #note-textarea::placeholder {
+    color: var(--ink-soft);
+    opacity: 0.7;
   }
   #send-note-btn {
     padding: 8px 24px;
-    border: 2px solid #d4a017;
-    border-radius: 10px;
-    background: #f2dd97;
-    color: #4a3a10;
+    border: 2px solid var(--ink);
+    border-radius: var(--wobble-a);
+    background-color: var(--ink);
+    color: var(--paper);
     font-weight: bold;
     cursor: pointer;
     font-size: 14px;
     font-family: inherit;
-    transition: background 0.15s, transform 0.15s;
+    transition: transform 0.15s;
   }
   #send-note-btn:hover:not(:disabled) {
-    background: #e8c873;
-    transform: translateY(-1px);
+    transform: translateY(-1px) rotate(-1deg);
   }
   #send-note-btn:disabled {
     opacity: 0.6;
@@ -509,14 +656,48 @@
   }
   #send-status {
     font-size: 13px;
-    color: #0a5c40;
     text-align: center;
   }
   #send-status:empty {
     display: none;
   }
   #send-status.error {
-    color: #c0392b;
+    font-weight: bold;
+    text-decoration: underline wavy;
+    text-underline-offset: 3px;
+  }
+
+  /* credits popup */
+  .credits-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .credits-list li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 4px;
+    border-top: 2px dashed var(--ink-light);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .credits-list li:first-child {
+    border-top: none;
+  }
+  .credit-role {
+    flex: 0 0 88px;
+    font-weight: bold;
+  }
+  .credit-what {
+    flex: 1;
+  }
+  .credits-note {
+    margin: 14px 0 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
   }
 
   /* scattered emojis */
@@ -531,10 +712,6 @@
   .emoji-layer.revealed {
     visibility: visible;
   }
-  .emoji-scatter {
-    position: absolute;
-    inset: 0;
-  }
   .scatter-emoji {
     position: absolute;
     font-size: var(--s, 28px);
@@ -543,6 +720,13 @@
     transform: scale(0) rotate(var(--r, 0deg));
     user-select: none;
     -webkit-user-select: none;
+    filter: url(#emoji-outline);
+  }
+  img.twemoji {
+    display: block;
+    width: 1em;
+    height: 1em;
+    pointer-events: none;
   }
   .emoji-layer.revealed .scatter-emoji {
     opacity: 1;
@@ -561,14 +745,11 @@
     50%      { transform: translateY(-6px) rotate(var(--r, 0deg)); }
   }
 
+  /* fade out only, no floating */
   .emoji-layer.closing .scatter-emoji {
     opacity: 0;
-    scale: 0.5;
-    translate: 0 -18px;
-    transition:
-      opacity var(--out-dur, 0.7s) ease-in-out var(--out-d, 0s),
-      scale var(--out-dur, 0.7s) ease-in-out var(--out-d, 0s),
-      translate var(--out-dur, 0.7s) ease-in-out var(--out-d, 0s);
+    animation-play-state: paused;
+    transition: opacity var(--out-dur, 0.7s) ease-in-out var(--out-d, 0s);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -587,11 +768,11 @@
     bottom: 56px;
     transform: translateX(-50%);
     width: min(92vw, 350px);
-    background: #fdf6e3;
-    border: 2px solid #e8c873;
-    border-radius: 14px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 16px 7px 15px 8px / 8px 15px 7px 16px;
     padding: 10px 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 24px rgba(20, 32, 25, 0.22);
     pointer-events: auto;
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
@@ -611,7 +792,6 @@
   }
   #board-status {
     font-size: 12px;
-    color: #6b5423;
     text-align: center;
     margin-bottom: 8px;
     padding: 0 14px;
@@ -624,13 +804,14 @@
     border: none;
     font-size: 14px;
     line-height: 1;
-    color: #6b5423;
+    color: var(--ink);
     cursor: pointer;
     padding: 4px;
     font-family: inherit;
+    transition: transform 0.15s;
   }
   .tray-close:hover {
-    color: #4a3a10;
+    transform: rotate(90deg);
   }
 
   /* quick send emojis will be dimmed + locked */
@@ -654,14 +835,17 @@
     font-size: 22px;
     line-height: 1;
     padding: 0;
-    border: 2px solid #e8c873;
-    border-radius: 8px;
-    background: #fff;
+    border: 2px solid var(--ink-light);
+    border-radius: var(--wobble-sm-a);
+    background-color: var(--paper);
     cursor: pointer;
-    transition: background 0.15s, transform 0.15s;
+    transition: transform 0.15s;
+  }
+  .quick-btn:nth-child(even) {
+    border-radius: var(--wobble-sm-b);
   }
   .quick-btn:hover {
-    background: #f7ecc8;
+    background-image: var(--hatch);
     transform: translateY(-2px);
   }
   .quick-btn:active {
@@ -678,11 +862,10 @@
     font-family: inherit;
     font-size: 12px;
     font-weight: bold;
-    color: #6b5423;
+    color: var(--ink);
     cursor: pointer;
   }
   .more-toggle:hover {
-    color: #4a3a10;
     text-decoration: underline dotted;
   }
   .more-arrow {
@@ -718,17 +901,17 @@
     height: min(280px, 40vh);
     --num-columns: 8;
     --emoji-size: 1.4rem;
-    --background: #fdf6e3;
-    --border-color: #e8c873;
+    --background: var(--paper);
+    --border-color: var(--ink-light);
     --border-radius: 10px;
-    --input-border-color: #e8c873;
+    --input-border-color: var(--ink-light);
     --input-border-radius: 8px;
-    --input-font-color: #4a3a10;
-    --category-font-color: #6b5423;
-    --indicator-color: #d4a017;
-    --outline-color: #d4a017;
-    --button-hover-background: #f7ecc8;
-    --button-active-background: #f2dd97;
+    --input-font-color: var(--ink);
+    --category-font-color: var(--ink-soft);
+    --indicator-color: var(--ink);
+    --outline-color: var(--ink);
+    --button-hover-background: var(--paper-shade);
+    --button-active-background: var(--paper-dots);
   }
   emoji-picker.locked {
     opacity: 0.4;
@@ -739,28 +922,50 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    color: red;
-    font-family: var(--font-main);
     font-size: 14px;
-    margin: 0;
     text-align: center;
     padding: 0 12px;
   }
+  /* bottom right credits and version */
   #version-tag {
     position: fixed;
     bottom: 4px;
     right: 8px;
-    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 10px;
-    color: #0a5c40;
-    opacity: 0.45;
-    margin: 0;
+    color: var(--ink-soft);
     letter-spacing: 0.3px;
+  }
+  #version-tag span {
+    opacity: 0.6;
+  }
+  .credits-link {
+    padding: 2px 4px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    color: var(--ink-soft);
+    opacity: 0.6;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .credits-link:hover {
+    opacity: 1;
+    text-decoration-style: dotted;
   }
   @media (max-width: 700px) {
     body {
       padding: 24px 12px 90px;
       gap: 28px;
+    }
+    .avatar {
+      width: 70px;
+      height: 70px;
     }
     .header h1 {
       font-size: 38px;
@@ -792,6 +997,9 @@
     .control-group {
       width: 100%;
     }
+    .credit-role {
+      flex-basis: 76px;
+    }
     #time-wasted {
       font-size: 12px;
     }
@@ -802,7 +1010,41 @@
 </style>
 </head>
 <body>
+
+<!-- placeholder doodles for the 3 icon buttons (question / mail / pin) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="icon-faq" viewBox="0 0 48 48">
+    <path d="M24 5C34.5 4.6 43.4 13 43 24C42.6 35 34.2 43.4 23.6 43C12.6 42.6 4.6 34 5 23.4C5.4 13 13.4 5.4 24 5Z"/>
+    <path d="M17 19.5C16.8 14 21 11.3 25 11.8C29.2 12.3 31.6 15.6 30.6 19.4C29.6 23.4 25.2 24.4 24.6 29.2"/>
+    <path d="M24.5 35.3V35.6" stroke-width="4.6"/>
+  </symbol>
+  <symbol id="icon-note" viewBox="0 0 48 48">
+    <path d="M6 12.6C16 11.6 32 12.2 42 11.6L42.6 35.4C32 36.6 16 36 5.6 36.6Z"/>
+    <path d="M6.6 13.2C13 19.6 19 25 24 28.6C29 25 35 19.6 41.6 12.6"/>
+    <path d="M6.2 35.8L17.4 24.6M42.2 35.2L30.6 24.6"/>
+  </symbol>
+  <symbol id="icon-pin" viewBox="0 0 48 48">
+    <path d="M16.2 4.8C21 4.3 27 4.6 31.8 4.4C35.4 4.6 35.5 11.6 31.8 11.9L30.4 12C30.2 16 30.6 19 30.2 22C30 24.4 32.6 25.8 34.6 27C36.4 28 38 28.6 38 31.4L38.2 34.4C30 35 18 34.2 10 34.6L10.2 31.2C10.2 28.6 12 28 13.6 27C15.8 25.8 18 24.6 17.8 22C17.6 19 18 16 17.8 12.2L16.4 12C12.6 11.8 12.8 5 16.2 4.8Z"/>
+    <path d="M24 34.6C24.2 38 23.8 41 24.1 44.2"/>
+  </symbol>
+
+  <!-- emoji outline for the wall -->
+  <filter id="emoji-outline" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="thick"/>
+    <feFlood style="flood-color: var(--ink)"/>
+    <feComposite in2="thick" operator="in" result="outline"/>
+    <feMerge>
+      <feMergeNode in="outline"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</svg>
+
 <div class="header">
+  <!-- my icon -->
+  <button id="avatar-btn" class="avatar-btn" type="button" aria-label="switch between day and night mode" aria-pressed="false">
+    <img id="avatar" class="avatar" src="images/icon.png" alt="" data-day="images/icon.png" data-night="images/icon2.png" onerror="if (this.src.endsWith(this.dataset.night)) { this.src = this.dataset.day; } else { this.parentNode.style.display = 'none'; }">
+  </button>
   <h1>@FrizzleLamb</h1>
   <p>hello! i'm frizzle. i like to make digital art and eat cheesecakes.</p>
 </div>
@@ -815,7 +1057,7 @@
       <a href="https://paypal.me/frizzleshillings" target="_blank" rel="noopener noreferrer">paypal</a>
     </div>
   </div>
-  <div class="link-group art">
+  <div class="link-group">
     <span class="label">where i post art</span>
     <div class="link-row">
       <a href="https://x.com/FrizzleLamb" target="_blank" rel="noopener noreferrer">twitter</a>
@@ -826,16 +1068,27 @@
 </div>
 <hr class="divider">
 
-<!-- icon buttons -->
+<!-- icon buttons (question mark, mail, pin)
+     todo: swap the doodles.
+       question.png -> faq button
+       mail.png     -> note button
+       pin.png      -> emoji wall button (+ the tiny pin in the faq question)
+     until those files exist the svg doodles are just placeholders and show instead -->
 <div class="icon-row">
+  <!-- question mark -->
   <button class="donut-toggle" data-open="faq-modal-overlay" aria-label="faq" aria-haspopup="dialog" aria-expanded="false">
-    <span class="emoji" aria-hidden="true">❓</span>
+    <img class="icon" src="icons/question.png" alt="" onerror="this.remove()">
+    <svg class="icon" aria-hidden="true"><use href="#icon-faq"/></svg>
   </button>
+  <!-- mail -->
   <button class="donut-toggle" data-open="note-modal-overlay" aria-label="send me a note" aria-haspopup="dialog" aria-expanded="false">
-    <span class="emoji" aria-hidden="true">✉️</span>
+    <img class="icon" src="icons/mail.png" alt="" onerror="this.remove()">
+    <svg class="icon" aria-hidden="true"><use href="#icon-note"/></svg>
   </button>
+  <!-- pin -->
   <button id="board-toggle-btn" class="donut-toggle" aria-label="show or hide the emoji wall" aria-pressed="false">
-    <span class="emoji" aria-hidden="true">📍</span>
+    <img class="icon" src="icons/pin.png" alt="" onerror="this.remove()">
+    <svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg>
   </button>
 </div>
 
@@ -870,7 +1123,7 @@
           <span>what's your setup?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a3">
-          <div class="faq-a"><p>i use a Huion Kamvas 13 GS-1331 since 2023.</p></div>
+          <div class="faq-a"><p>i use a Huion Kamvas 13 GS1331 since 2023.</p></div>
         </div>
       </div>
 
@@ -885,7 +1138,8 @@
 
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5">
-          <span>what's the 📍 for?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+          <!-- tiny pin: also swaps to icons/pin.png -->
+          <span>what's the <img class="icon icon-inline" src="icons/pin.png" alt="" onerror="this.remove()"><svg class="icon icon-inline" aria-hidden="true"><use href="#icon-pin"/></svg> for?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a5">
           <div class="faq-a"><p>it shows the emojis other visitors have left on the page. you can add any emoji once a day!</p></div>
@@ -894,10 +1148,10 @@
 
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6">
-          <span>didn't you use to make youtube videos?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+          <span>didn't you use to make <a href="https://www.youtube.com/@FrizzleLamb/" target="_blank" rel="noopener noreferrer">youtube videos</a>?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a6">
-          <div class="faq-a"><p>yes... but i've retired ever since youtube updated their TOS which inadvertently pulled me out of their monetization program so it wasn't worth it anymore.</p></div>
+          <div class="faq-a"><p>yes... but i've retired ever since youtube updated their TOS which consequently pulled me out of their monetization program, so it wasn't worth it anymore.</p></div>
         </div>
       </div>
 
@@ -934,7 +1188,7 @@
     <circle cx="4.5" cy="4.5" r="0.9" fill="rgba(80,45,15,0.55)" />
   </pattern>
 </defs>
-<circle id="frosting-main" cx="150" cy="150" r="140" fill="#ffabb6" fill-opacity="1" filter="url(#squiggly)" />
+<circle id="frosting-main" cx="150" cy="150" r="140" fill="#ffabb6" filter="url(#squiggly)" />
 <circle id="cinnamon-overlay" cx="150" cy="150" r="140" fill="url(#cinnamon-dots)" filter="url(#squiggly)" opacity="0" pointer-events="none" />
 <circle cx="150" cy="150" r="140" fill="url(#frosting-shadow-gradient)" filter="url(#squiggly)" pointer-events="none" />
 <circle cx="50%" cy="50%" r="12%" fill="url(#inner-hole-shadow)" filter="url(#squiggly)" pointer-events="none" />
@@ -983,7 +1237,7 @@
   <div class="donut-modal note-modal" role="dialog" aria-modal="true" aria-label="send me a note">
     <button class="modal-close" aria-label="close">✕</button>
     <div class="send-section">
-      <span class="label">send me an anonymous message! (i won't be able to reply directly)</span>
+      <span class="label">send me an anonymous message! (i won't be able to reply directly but i read them)</span>
       <textarea id="note-textarea" placeholder="leave words of wisdom here..."></textarea>
       <button id="send-note-btn">do it</button>
       <div id="send-status"></div>
@@ -991,9 +1245,32 @@
   </div>
 </div>
 
+<!-- credits popup -->
+<div id="credits-modal-overlay" class="modal-overlay">
+  <div class="donut-modal credits-modal" role="dialog" aria-modal="true" aria-label="credits">
+    <button class="modal-close" aria-label="close">✕</button>
+    <p class="modal-title">credits</p>
+    <ul class="credits-list">
+      <li>
+        <span class="credit-role">font</span>
+        <span class="credit-what"><a href="https://fonts.google.com/specimen/Comic+Relief" target="_blank" rel="noopener noreferrer">Comic Relief</a> by Jeff Davis (Loudifier), via Google Fonts. SIL Open Font License.</span>
+      </li>
+      <li>
+        <span class="credit-role">emoji wall</span>
+        <span class="credit-what"><a href="https://github.com/nolanlawson/emoji-picker-element" target="_blank" rel="noopener noreferrer">emoji-picker-element</a> by Nolan Lawson (MIT).<br/><a href="https://github.com/jdecked/twemoji" target="_blank" rel="noopener noreferrer">Twemoji</a> graphics © Twitter, Inc and other contributors, licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC-BY 4.0</a>.</span>
+      </li>
+      <li>
+        <span class="credit-role">sounds</span>
+        <span class="credit-what">Minimal UI pack – pops clicks ticks.wav by <a href="https://freesound.org/s/538236/" target="_blank" rel="noopener noreferrer">DesignDean</a><br/>Whoop by <a href="https://freesound.org/s/825578/" target="_blank" rel="noopener noreferrer">akelley6</a></span>
+      </li>
+    </ul>
+    <p class="credits-note">thank you to everyone who makes their work free to use!</p>
+  </div>
+</div>
+
 <!-- emojis + tray (hidden until button is clicked) -->
 <div id="emoji-layer" class="emoji-layer">
-  <div id="emoji-scatter" class="emoji-scatter"></div>
+  <div id="emoji-scatter"></div>
   <div id="emoji-tray" class="emoji-tray">
     <button id="tray-close" class="tray-close" type="button" aria-label="close emoji picker">✕</button>
     <div id="board-status"></div>
@@ -1010,7 +1287,10 @@
 </div>
 
 <div id="time-wasted">time wasted since you opened this website: 00:00:00</div>
-<p id="version-tag">v1.6</p>
+<div id="version-tag">
+  <button class="credits-link" type="button" data-open="credits-modal-overlay" aria-haspopup="dialog" aria-expanded="false">credits</button>
+  <span>v2.0</span>
+</div>
 
 <audio id="hover-sound" src="sounds/hover.mp3" preload="auto"></audio>
 <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
@@ -1054,6 +1334,21 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
 
+/* ---------- night mode (click my icon) ---------- */
+const avatarBtn = document.getElementById('avatar-btn');
+const avatarImg = document.getElementById('avatar');
+const pickerEl = document.getElementById('emoji-picker');
+avatarBtn.addEventListener('click', () => {
+  const goNight = document.documentElement.dataset.theme !== 'night';
+  if (goNight) document.documentElement.setAttribute('data-theme', 'night');
+  else document.documentElement.removeAttribute('data-theme');
+  avatarImg.src = goNight ? avatarImg.dataset.night : avatarImg.dataset.day;
+  avatarBtn.setAttribute('aria-pressed', String(goNight));
+  /* emoji picker's own light/dark switch */
+  pickerEl.classList.toggle('dark', goNight);
+  pickerEl.classList.toggle('light', !goNight);
+});
+
 /* ---------- faq ---------- */
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1073,6 +1368,9 @@ document.querySelectorAll('.faq-q').forEach(btn => {
       }, 260);
     }
   });
+});
+document.querySelectorAll('.faq-q a').forEach(link => {
+  link.addEventListener('click', (e) => e.stopPropagation());
 });
 
 /* ---------- parallax background ---------- */
@@ -1206,11 +1504,6 @@ const statusEl = document.getElementById('send-status');
 const noteTextarea = document.getElementById('note-textarea');
 sendBtn.addEventListener('click', async () => {
   statusEl.classList.remove('error');
-  if (WEB3FORMS_ACCESS_KEY === "PASTE_WEB3FORMS_ACCESS_KEY_HERE") {
-    statusEl.textContent = "i haven't finished setting this up yet, sorry!";
-    statusEl.classList.add('error');
-    return;
-  }
   const note = noteTextarea.value.trim();
   if (!note) {
     statusEl.textContent = "write something first!";
@@ -1253,7 +1546,7 @@ const secretSound = document.getElementById('secret-sound');
 hoverSound.volume = 0.35;
 clickSound.volume = 0.5;
 closeSound.volume = 0.5;
-secretSound.volume = 0.6;
+secretSound.volume = 0.4;
 
 function playSound(audioEl) {
   const clone = audioEl.cloneNode();
@@ -1262,7 +1555,7 @@ function playSound(audioEl) {
 }
 
 const interactiveEls = document.querySelectorAll(
-  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a'
+  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a, .credits-link, #avatar-btn'
 );
 interactiveEls.forEach(el => {
   el.addEventListener('mouseenter', () => playSound(hoverSound));
@@ -1277,6 +1570,7 @@ secretTrigger.addEventListener('click', () => {
   playSound(secretSound);
   secretCompartment.classList.add('open');
   secretTrigger.classList.add('used');
+  secretTrigger.closest('.faq-item').classList.add('unlocked');   // old yellow/brown palette
   setTimeout(() => {
     secretCompartment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 300);
@@ -1295,14 +1589,14 @@ const firebaseConfig = {
   measurementId: "G-69MYV8V2C2"
 };
 
-/* full emoji picker (loaded separately so the wall still works if the CDN hiccups) */
+/* full emoji picker */
 import("https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js")
   .catch(err => console.error("Emoji picker failed to load:", err));
 customElements.whenDefined('emoji-picker').then(() => {
   const pickerEl = document.getElementById('emoji-picker');
   if (!pickerEl || !pickerEl.shadowRoot) return;
 
-  /* hide the recently-used bar and the flags tab */
+  /* hides recently-used bar and flags */
   const style = document.createElement('style');
   style.textContent = `
     .favorites { display: none !important; }
@@ -1321,7 +1615,7 @@ customElements.whenDefined('emoji-picker').then(() => {
   pickerDb.getEmojiBySearchQuery = async (q) => noFlags(await bySearch(q));
 });
 
-/* accepts exactly one emoji, but never a flag */
+/* accepts exactly one emoji but no flag */
 const OTHER_FLAGS = new Set(
   ['🏁', '🚩', '🎌', '🏴', '🏳️', '🏳️‍🌈', '🏳️‍⚧️', '🏴‍☠️'].map(s => s.replace(/[\uFE0F\u200D]/g, ''))
 );
@@ -1355,12 +1649,17 @@ const quickRow = document.getElementById('quick-emojis');
 const moreToggle = document.getElementById('more-toggle');
 const moreWrap = document.getElementById('more-wrap');
 
+/* twemoji on every device */
+function parseEmoji(node) {
+  if (window.twemoji) twemoji.parse(node, { folder: 'svg', ext: '.svg', className: 'twemoji' });
+}
+
 layer.style.setProperty('--out-dur', `${CLOSE_DURATION_S}s`);
 
 let fb = null;
 let emojisRef = null;
 let settled = false;
-let sending = false;    // stops double-clicks from sending twice
+let sending = false;    // stops double-clicks
 let statusTimer = null;
 let trayTimer = null;
 let closeTimer = null;
@@ -1426,7 +1725,6 @@ function setMoreOpen(open) {
   moreToggle.setAttribute('aria-expanded', String(open));
 }
 
-// "used" = already sent today
 function setUsedMode(used) {
   setPickerEnabled(!used);
   if (used) setMoreOpen(false);
@@ -1473,7 +1771,7 @@ function hideBoard() {
   });
   layer.classList.add('closing');
 
-  // hides layer once the last emoji has finished fading
+  // once the last emoji has finished fading
   clearTimeout(closeTimer);
   closeTimer = setTimeout(() => {
     layer.classList.remove('revealed', 'closing');
@@ -1489,12 +1787,12 @@ toggleBtn.addEventListener('click', () => {
 document.getElementById('tray-close').addEventListener('click', () => {
   clearTimeout(trayTimer);
   tray.classList.add('gone');
-  try { playSound(closeSound); } catch (e) {}
+  playSound(closeSound);
 });
 
 moreToggle.addEventListener('click', () => {
   setMoreOpen(!moreWrap.classList.contains('open'));
-  try { playSound(clickSound); } catch (e) {}
+  playSound(clickSound);
 });
 
 /* 2) */
@@ -1505,6 +1803,7 @@ QUICK_EMOJIS.forEach(emoji => {
   btn.type = 'button';
   btn.className = 'quick-btn';
   btn.textContent = emoji;
+  parseEmoji(btn);
   btn.setAttribute('aria-label', `send ${emoji}`);
   btn.addEventListener('click', () => sendEmoji(emoji));
   quickRow.appendChild(btn);
@@ -1527,10 +1826,11 @@ function seededRandom(str) {
   };
 }
 
-/* keep emojis off the center */
+/* desktop: emojis stay off the middle. phones can overlap */
+const MOBILE_QUERY = window.matchMedia('(max-width: 700px)');   // phone-size = overlap is ok
 const EMOJI_PAD = 16;   // breathing room around the text and links (px)
 const EDGE = 8;         // how close to the screen edge an emoji may sit (px)
-let zones = null;       // cached free areas, refreshed when the window changes
+let zones = null;
 
 function contentBox() {
   let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
@@ -1551,7 +1851,7 @@ function getZones() {
   const h = layer.clientHeight;
   const full = { l: EDGE, t: EDGE, r: w - EDGE, b: h - EDGE };
   let bands = [full];
-  const box = contentBox();
+  const box = MOBILE_QUERY.matches ? null : contentBox();
   if (box) {
     const top = Math.max(box.t, EDGE);
     const bottom = Math.min(box.b, h - EDGE);
@@ -1613,6 +1913,7 @@ function addScatterEmoji(key, emoji) {
   const el = document.createElement('span');
   el.className = 'scatter-emoji';
   el.textContent = emoji;
+  parseEmoji(el);
   el.dataset.key = key;
   el.dataset.size = size;
   el.style.setProperty('--r', `${rotation}deg`);
@@ -1646,7 +1947,7 @@ async function sendEmoji(emoji) {
   saveLastSentDay(todayString());
   setPickerEnabled(false);
   setStatus("sending...", false);
-  try { playSound(clickSound); } catch (e) {}
+  playSound(clickSound);
 
   try {
     await fb.push(emojisRef, { e: emoji, t: fb.serverTimestamp() });
