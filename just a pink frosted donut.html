@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>FrizzleLamb's Coop</title>
+<meta property="og:title" content="FrizzleLamb's Coop">
+<meta property="og:description" content="commission me pls">
+<meta property="og:image" content="https://frizzlelamb.github.io/preview.png">
+<meta property="og:url" content="https://frizzlelamb.github.io/">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FrizzleLamb's Coop">
+<meta name="twitter:description" content="commission me please">
+<meta name="twitter:image" content="https://frizzlelamb.github.io/preview.png">
+<link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-main: "Comic Relief", "Comic Sans MS", "Comic Sans", sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 32px 16px 80px;
+    background-image:
+      radial-gradient(#6fd4c7 15%, transparent 16%),
+      radial-gradient(ellipse 120% 20% at bottom, #5cc9bb 0%, transparent 100%);
+    background-size: 40px 40px, 100% 100%;
+    background-position: 0 0, 0 0;
+    background-color: #83E1D7;
+    background-attachment: fixed;
+    transition: background-position 0.2s ease-out;
+    gap: 40px;
+    font-family: var(--font-main);
+  }
+  .header {
+    text-align: center;
+  }
+  .header h1 {
+    margin: 0;
+    font-size: 52px;
+    color: #063B26;
+  }
+  .header p {
+    margin: 10px auto 0;
+    max-width: 560px;
+    font-size: 22px;
+    line-height: 1.35;
+    color: #063B26;
+  }
+  .links-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    max-width: 640px;
+  }
+  .link-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .link-group span.label {
+    font-size: 19px;
+    color: #063B26;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .link-row a {
+    text-decoration: none;
+    color: #6b5423;
+    background: #fdf6e3;
+    border: 2px solid #e8c873;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: inherit;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(6, 59, 38, 0.10);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s, border-color 0.15s;
+  }
+  .link-row a:hover {
+    background: #f7ecc8;
+    border-color: #d4a017;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(6, 59, 38, 0.14);
+  }
+  .link-row a:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(6, 59, 38, 0.10);
+  }
+  .link-row a:focus-visible {
+    outline: 3px solid #063B26;
+    outline-offset: 4px;
+  }
+  /* commission links get the golden "do it" button look */
+  .link-group.commission .link-row a {
+    background: #f2dd97;
+    border-color: #d4a017;
+    color: #4a3a10;
+  }
+  .link-group.commission .link-row a:hover {
+    background: #e8c873;
+  }
+ 
+  /* ===== end link buttons ===== */
+  .divider {
+    width: 100%;
+    max-width: 640px;
+    border: none;
+    border-top: 2px dashed #5cb8a9;
+    opacity: 0.6;
+  }
+
+  /* row of icon buttons (faq / note / emoji) */
+  .icon-row {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+  }
+  .donut-toggle {
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  }
+  .donut-toggle:hover {
+    transform: scale(1.1);
+  }
+  .donut-toggle .emoji {
+    font-size: 32px;
+    line-height: 1;
+    display: block;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 40, 30, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 100;
+  }
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .donut-modal {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #fdf6e3;
+    border: 2px solid #e8c873;
+    border-radius: 14px;
+    padding: 28px 20px 20px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    transform: scale(0.96);
+    transition: transform 0.18s ease;
+  }
+  .modal-overlay.active .donut-modal {
+    transform: scale(1);
+  }
+  .note-modal {
+    max-width: 420px;
+  }
+  .faq-modal {
+    max-width: 600px;
+  }
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    color: #6b5423;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .modal-close:hover {
+    color: #4a3a10;
+  }
+  .modal-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    color: #6b5423;
+    margin: 0 0 16px;
+  }
+  .panel-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  #donut-container {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    max-width: 60vw;
+    max-height: 60vw;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+    flex-shrink: 0;
+    mask-image: radial-gradient(circle closest-side at center, transparent 0, transparent 17%, black 19%, black 100%);
+    -webkit-mask-image: radial-gradient(circle closest-side at center, transparent 0, transparent 17%, black 19%, black 100%);
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+  #donut {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #f2b070;
+    box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  #frosting-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .sprinkle {
+    position: absolute;
+    width: 4px;
+    height: 17px;
+    border-radius: 2px;
+    pointer-events: none;
+    transform-origin: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  .sprinkle.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .sprinkle.pebble {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  .recipe-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .control-group {
+    width: 108px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .control-group span.label {
+    font-size: 13px;
+    color: #6b5423;
+    font-weight: bold;
+  }
+  .control-group .label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .clear-mini-btn {
+    font-size: 12px;
+    font-weight: bold;
+    color: #c0392b;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    text-decoration: underline;
+  }
+  .clear-mini-btn:hover {
+    color: #8e2a1f;
+  }
+  button.option-btn {
+    padding: 6px 12px;
+    border: 2px solid #e8c873;
+    border-radius: 6px;
+    background: #fff;
+    color: #6b5423;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    width: 100%;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  button.option-btn:hover {
+    background: #f7ecc8;
+  }
+  button.option-btn.active {
+    border-color: #d4a017;
+    background: #f2dd97;
+    color: #4a3a10;
+    font-weight: bold;
+  }
+
+  /* faq popup */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .faq-item {
+    background: #fffaf0;
+    border: 2px solid #e8c873;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .faq-item.open {
+    border-color: #d4a017;
+  }
+  .faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    color: #6b5423;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .faq-q:hover {
+    background: #f7ecc8;
+  }
+  .faq-arrow {
+    font-size: 12px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .faq-item.open .faq-arrow {
+    transform: rotate(180deg);
+  }
+  .faq-a-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.25s ease, visibility 0s linear 0.25s;
+  }
+  .faq-item.open .faq-a-wrap {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.25s ease, visibility 0s;
+  }
+  .faq-a {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .faq-a p {
+    margin: 0;
+    padding: 0 12px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #4a3a10;
+  }
+
+  /* the secret donut maker compartment */
+  .secret-trigger {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  .secret-trigger:hover {
+    text-decoration: underline dotted;
+  }
+  .secret-trigger.used {
+    cursor: default;
+    text-decoration: none;
+  }
+  .secret-compartment {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.4s ease, visibility 0s linear 0.4s;
+  }
+  .secret-compartment.open {
+    grid-template-rows: 1fr;
+    visibility: inherit;
+    transition: grid-template-rows 0.4s ease, visibility 0s;
+  }
+  .secret-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .secret-panel {
+    margin: 4px 12px 12px;
+    padding-top: 16px;
+    border-top: 2px dashed #e8c873;
+  }
+
+  /* note popup */
+  .send-section {
+    width: 100%;
+    max-width: 420px;
+    margin: 24px auto 0;
+    border-top: 2px dashed #e8c873;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .note-modal .send-section {
+    max-width: 100%;
+    margin: 0 auto;
+    border-top: none;
+    padding: 0;
+    gap: 12px;
+  }
+  .send-section span.label {
+    font-size: 15px;
+    color: #6b5423;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.4;
+  }
+  #note-textarea {
+    width: 100%;
+    min-height: 110px;
+    resize: vertical;
+    border: 2px solid #e8c873;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #4a3a10;
+    background: #fffaf0;
+  }
+  #note-textarea:focus {
+    outline: none;
+    border-color: #d4a017;
+  }
+  #send-note-btn {
+    padding: 8px 24px;
+    border: 2px solid #d4a017;
+    border-radius: 10px;
+    background: #f2dd97;
+    color: #4a3a10;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    transition: background 0.15s, transform 0.15s;
+  }
+  #send-note-btn:hover:not(:disabled) {
+    background: #e8c873;
+    transform: translateY(-1px);
+  }
+  #send-note-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+  #send-status {
+    font-size: 13px;
+    color: #0a5c40;
+    text-align: center;
+  }
+  #send-status:empty {
+    display: none;
+  }
+  #send-status.error {
+    color: #c0392b;
+  }
+
+  /* scattered emojis */
+  .emoji-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    overflow: hidden;
+    visibility: hidden;
+  }
+  .emoji-layer.revealed {
+    visibility: visible;
+  }
+  .emoji-scatter {
+    position: absolute;
+    inset: 0;
+  }
+  .scatter-emoji {
+    position: absolute;
+    font-size: var(--s, 28px);
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0) rotate(var(--r, 0deg));
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .emoji-layer.revealed .scatter-emoji {
+    opacity: 1;
+    transform: rotate(var(--r, 0deg));
+    animation:
+      pop-in 0.45s ease-out var(--d, 0s) backwards,
+      bob 4s ease-in-out calc(var(--d, 0s) + 0.45s) infinite;
+  }
+  @keyframes pop-in {
+    0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+    70%  { transform: scale(1.3) rotate(calc(var(--r, 0deg) + 6deg)); opacity: 1; }
+    100% { transform: scale(1) rotate(var(--r, 0deg)); opacity: 1; }
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50%      { transform: translateY(-6px) rotate(var(--r, 0deg)); }
+  }
+
+  .emoji-layer.closing .scatter-emoji {
+    opacity: 0;
+    scale: 0.5;
+    translate: 0 -18px;
+    transition:
+      opacity var(--out-dur, 0.7s) ease-in-out var(--out-d, 0s),
+      scale var(--out-dur, 0.7s) ease-in-out var(--out-d, 0s),
+      translate var(--out-dur, 0.7s) ease-in-out var(--out-d, 0s);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .emoji-layer.revealed .scatter-emoji {
+      animation: none;
+    }
+    .emoji-layer.closing .scatter-emoji {
+      transition: none;
+    }
+  }
+
+  /* emoji tray (send emojis) */
+  .emoji-tray {
+    position: absolute;
+    left: 50%;
+    bottom: 56px;
+    transform: translateX(-50%);
+    width: min(92vw, 350px);
+    background: #fdf6e3;
+    border: 2px solid #e8c873;
+    border-radius: 14px;
+    padding: 10px 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .emoji-layer.revealed .emoji-tray {
+    animation: tray-up 0.25s ease-out;
+  }
+  .emoji-tray.gone {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s linear 0.4s;
+  }
+  @keyframes tray-up {
+    0%   { transform: translate(-50%, 12px); opacity: 0; }
+    100% { transform: translate(-50%, 0); opacity: 1; }
+  }
+  #board-status {
+    font-size: 12px;
+    color: #6b5423;
+    text-align: center;
+    margin-bottom: 8px;
+    padding: 0 14px;
+  }
+  .tray-close {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    line-height: 1;
+    color: #6b5423;
+    cursor: pointer;
+    padding: 4px;
+    font-family: inherit;
+  }
+  .tray-close:hover {
+    color: #4a3a10;
+  }
+
+  /* quick send emojis will be dimmed + locked */
+  .quick-emojis {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+  .quick-emojis.locked {
+    opacity: 0.4;
+  }
+  .quick-btn {
+    width: 42px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0;
+    border: 2px solid #e8c873;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .quick-btn:hover {
+    background: #f7ecc8;
+    transform: translateY(-2px);
+  }
+  .quick-btn:active {
+    transform: scale(0.9);
+  }
+
+  /* more options */
+  .more-toggle {
+    display: block;
+    margin: 8px auto 0;
+    padding: 2px 8px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    color: #6b5423;
+    cursor: pointer;
+  }
+  .more-toggle:hover {
+    color: #4a3a10;
+    text-decoration: underline dotted;
+  }
+  .more-arrow {
+    display: inline-block;
+    font-size: 10px;
+    transition: transform 0.2s ease;
+  }
+  .more-toggle[aria-expanded="true"] .more-arrow {
+    transform: rotate(180deg);
+  }
+  .more-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.3s ease, visibility 0s linear 0.3s;
+  }
+  .more-wrap.open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.3s ease, visibility 0s;
+  }
+  .more-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .more-inner emoji-picker {
+    margin-top: 8px;
+  }
+
+  /* emoji picker element */
+  emoji-picker {
+    width: 100%;
+    height: min(280px, 40vh);
+    --num-columns: 8;
+    --emoji-size: 1.4rem;
+    --background: #fdf6e3;
+    --border-color: #e8c873;
+    --border-radius: 10px;
+    --input-border-color: #e8c873;
+    --input-border-radius: 8px;
+    --input-font-color: #4a3a10;
+    --category-font-color: #6b5423;
+    --indicator-color: #d4a017;
+    --outline-color: #d4a017;
+    --button-hover-background: #f7ecc8;
+    --button-active-background: #f2dd97;
+  }
+  emoji-picker.locked {
+    opacity: 0.4;
+  }
+
+  #time-wasted {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: red;
+    font-family: var(--font-main);
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+    padding: 0 12px;
+  }
+  #version-tag {
+    position: fixed;
+    bottom: 4px;
+    right: 8px;
+    font-family: var(--font-main);
+    font-size: 10px;
+    color: #0a5c40;
+    opacity: 0.45;
+    margin: 0;
+    letter-spacing: 0.3px;
+  }
+  @media (max-width: 700px) {
+    body {
+      padding: 24px 12px 90px;
+      gap: 28px;
+    }
+    .header h1 {
+      font-size: 38px;
+    }
+    .header p {
+      font-size: 18px;
+    }
+    .link-group span.label {
+      font-size: 17px;
+    }
+    .link-row {
+      gap: 12px;
+    }
+    .link-row a {
+      font-size: 16px;
+      padding: 9px 20px;
+    }
+    .panel-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .recipe-content {
+      flex-direction: column;
+      width: 100%;
+      max-width: 260px;
+      gap: 16px;
+    }
+    .control-group {
+      width: 100%;
+    }
+    #time-wasted {
+      font-size: 12px;
+    }
+    #version-tag {
+      font-size: 9px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>@FrizzleLamb</h1>
+  <p>hello! i'm frizzle. i like to make digital art and eat cheesecakes.</p>
+</div>
+<div class="links-section">
+  <div class="link-group commission">
+    <span class="label">where you can commission</span>
+    <div class="link-row">
+      <a href="https://vgen.co/FrizzleLamb" target="_blank" rel="noopener noreferrer">vgen</a>
+      <a href="https://ko-fi.com/frizzlelamb" target="_blank" rel="noopener noreferrer">ko-fi</a>
+      <a href="https://paypal.me/frizzleshillings" target="_blank" rel="noopener noreferrer">paypal</a>
+    </div>
+  </div>
+  <div class="link-group art">
+    <span class="label">where i post art</span>
+    <div class="link-row">
+      <a href="https://x.com/FrizzleLamb" target="_blank" rel="noopener noreferrer">twitter</a>
+      <a href="https://bsky.app/profile/frizzlelamb.bsky.social" target="_blank" rel="noopener noreferrer">bluesky</a>
+      <a href="https://www.pixiv.net/en/users/65300551" target="_blank" rel="noopener noreferrer">pixiv</a>
+    </div>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- icon buttons -->
+<div class="icon-row">
+  <button class="donut-toggle" data-open="faq-modal-overlay" aria-label="faq" aria-haspopup="dialog" aria-expanded="false">
+    <span class="emoji" aria-hidden="true">❓</span>
+  </button>
+  <button class="donut-toggle" data-open="note-modal-overlay" aria-label="send me a note" aria-haspopup="dialog" aria-expanded="false">
+    <span class="emoji" aria-hidden="true">✉️</span>
+  </button>
+  <button id="board-toggle-btn" class="donut-toggle" aria-label="show or hide the emoji wall" aria-pressed="false">
+    <span class="emoji" aria-hidden="true">📍</span>
+  </button>
+</div>
+
+<!-- faq -->
+<div id="faq-modal-overlay" class="modal-overlay">
+  <div class="donut-modal faq-modal" role="dialog" aria-modal="true" aria-label="faq">
+    <button class="modal-close" aria-label="close">✕</button>
+    <p class="modal-title">frequently asked questions</p>
+    <div class="faq-list">
+
+      <!-- questions and answers -->
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1">
+          <span>are your commissions open?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a1">
+          <div class="faq-a"><p>check my vgen for my current status!</p></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2">
+          <span>how can i commission you?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a2">
+          <div class="faq-a"><p>you can go through vgen or ko-fi, which are both connected to my paypal for payment. for inquiries and updates, you can contact me on vgen, twitter, or discord (same username).</p></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3">
+          <span>what's your setup?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a3">
+          <div class="faq-a"><p>i use a Huion Kamvas 13 GS-1331 since 2023.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4">
+          <span>what programs do you use?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a4">
+          <div class="faq-a"><p>i use krita for the main drawing and adobe photoshop cs5 for final tweaks.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5">
+          <span>what's the 📍 for?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a5">
+          <div class="faq-a"><p>it shows the emojis other visitors have left on the page. you can add any emoji once a day!</p></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6">
+          <span>didn't you use to make youtube videos?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a6">
+          <div class="faq-a"><p>yes... but i've retired ever since youtube updated their TOS which inadvertently pulled me out of their monetization program so it wasn't worth it anymore.</p></div>
+        </div>
+      </div>
+
+      <!-- the secret one -->
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7">
+          <span>where did the donutmaker go?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a7">
+          <div class="faq-a">
+            <p><button id="secret-trigger" class="secret-trigger" type="button">what donutmaker</button></p>
+
+            <div id="secret-compartment" class="secret-compartment">
+              <div class="secret-inner">
+                <div class="panel-content secret-panel">
+                  <div id="donut-container">
+                    <div id="donut"></div>
+                    <svg id="frosting-svg" viewBox="0 0 300 300">
+<defs>
+  <filter id="squiggly" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" seed="7" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+  <radialGradient id="frosting-shadow-gradient" cx="50%" cy="50%" r="50%">
+    <stop offset="93%" stop-color="#000000" stop-opacity="0" />
+    <stop offset="100%" stop-color="#000000" stop-opacity="0.05" />
+  </radialGradient>
+  <radialGradient id="inner-hole-shadow" cx="50%" cy="50%" r="50%">
+    <stop offset="45%" stop-color="#000000" stop-opacity="0" />
+    <stop offset="58%" stop-color="#000000" stop-opacity="0.15" />
+    <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+  </radialGradient>
+  <pattern id="cinnamon-dots" width="9" height="9" patternUnits="userSpaceOnUse">
+    <circle cx="4.5" cy="4.5" r="0.9" fill="rgba(80,45,15,0.55)" />
+  </pattern>
+</defs>
+<circle id="frosting-main" cx="150" cy="150" r="140" fill="#ffabb6" fill-opacity="1" filter="url(#squiggly)" />
+<circle id="cinnamon-overlay" cx="150" cy="150" r="140" fill="url(#cinnamon-dots)" filter="url(#squiggly)" opacity="0" pointer-events="none" />
+<circle cx="150" cy="150" r="140" fill="url(#frosting-shadow-gradient)" filter="url(#squiggly)" pointer-events="none" />
+<circle cx="50%" cy="50%" r="12%" fill="url(#inner-hole-shadow)" filter="url(#squiggly)" pointer-events="none" />
+                    </svg>
+                  </div>
+                  <div class="recipe-content">
+                    <div class="control-group">
+                      <span class="label">frosting</span>
+                      <button class="option-btn active" data-frosting="#ffabb6">strawberry</button>
+                      <button class="option-btn" data-frosting="#6b3f2a">chocolate</button>
+                      <button class="option-btn" data-frosting="#fbeeda">vanilla</button>
+                      <button class="option-btn" data-frosting="#fff8f0" data-opacity="0.3">glazed</button>
+                      <button class="option-btn" data-frosting="#a5713a" data-cinnamon="true">cinnamon</button>
+                    </div>
+                    <div class="control-group">
+                      <div class="label-row">
+                        <span class="label">toppings </span>
+                        <button id="clear-btn" class="clear-mini-btn">(clear)</button>
+                      </div>
+                      <button class="option-btn active" data-shape="long">sprinkles</button>
+                      <button class="option-btn" data-shape="dot">nonpareils</button>
+                      <button class="option-btn" data-shape="pebble">pebbles</button>
+                      <button class="option-btn" data-shape="jimmies">jimmies</button>
+                    </div>
+                    <div class="control-group">
+                      <span class="label">dough</span>
+                      <button class="option-btn active" data-dough="#f2b070">regular</button>
+                      <button class="option-btn" data-dough="#4e321d">chocolate</button>
+                      <button class="option-btn" data-dough="#8c211d">red velvet</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- note popup -->
+<div id="note-modal-overlay" class="modal-overlay">
+  <div class="donut-modal note-modal" role="dialog" aria-modal="true" aria-label="send me a note">
+    <button class="modal-close" aria-label="close">✕</button>
+    <div class="send-section">
+      <span class="label">send me an anonymous message! (i won't be able to reply directly)</span>
+      <textarea id="note-textarea" placeholder="leave words of wisdom here..."></textarea>
+      <button id="send-note-btn">do it</button>
+      <div id="send-status"></div>
+    </div>
+  </div>
+</div>
+
+<!-- emojis + tray (hidden until button is clicked) -->
+<div id="emoji-layer" class="emoji-layer">
+  <div id="emoji-scatter" class="emoji-scatter"></div>
+  <div id="emoji-tray" class="emoji-tray">
+    <button id="tray-close" class="tray-close" type="button" aria-label="close emoji picker">✕</button>
+    <div id="board-status"></div>
+    <div id="quick-emojis" class="quick-emojis"></div>
+    <button id="more-toggle" class="more-toggle" type="button" aria-expanded="false" aria-controls="more-wrap">
+      more options <span class="more-arrow" aria-hidden="true">▼</span>
+    </button>
+    <div id="more-wrap" class="more-wrap">
+      <div class="more-inner">
+        <emoji-picker id="emoji-picker" class="light"></emoji-picker>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="time-wasted">time wasted since you opened this website: 00:00:00</div>
+<p id="version-tag">v1.6</p>
+
+<audio id="hover-sound" src="sounds/hover.mp3" preload="auto"></audio>
+<audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
+<audio id="close-sound" src="sounds/close.mp3" preload="auto"></audio>
+<audio id="secret-sound" src="sounds/secret.mp3" preload="auto"></audio>
+
+<script>
+/* ---------- popups ---------- */
+let activeOverlay = null;
+let activeOpener = null;
+
+function openModal(overlay, opener) {
+  activeOverlay = overlay;
+  activeOpener = opener;
+  overlay.classList.add('active');
+  opener.setAttribute('aria-expanded', 'true');
+}
+function closeModal() {
+  if (!activeOverlay) return;
+  playSound(closeSound);
+  activeOverlay.classList.remove('active');
+  activeOpener.setAttribute('aria-expanded', 'false');
+  activeOverlay = null;
+  activeOpener = null;
+}
+
+document.querySelectorAll('[data-open]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    openModal(document.getElementById(btn.dataset.open), btn);
+  });
+});
+document.querySelectorAll('.modal-close').forEach(btn => {
+  btn.addEventListener('click', closeModal);
+});
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ---------- faq ---------- */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const willOpen = !item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item.open').forEach(other => {
+      other.classList.remove('open');
+      other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+
+    if (willOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      setTimeout(() => {
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 260);
+    }
+  });
+});
+
+/* ---------- parallax background ---------- */
+let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+const PARALLAX_MAX = 16;
+document.addEventListener('mousemove', (e) => {
+  const xRatio = (e.clientX / window.innerWidth - 0.5) * 2;
+  const yRatio = (e.clientY / window.innerHeight - 0.5) * 2;
+  targetX = xRatio * PARALLAX_MAX;
+  targetY = yRatio * PARALLAX_MAX;
+});
+function parallaxLoop() {
+  currentX += (targetX - currentX) * 0.08;
+  currentY += (targetY - currentY) * 0.08;
+  document.body.style.backgroundPosition = `${currentX}px ${currentY}px, 0 0`;
+  requestAnimationFrame(parallaxLoop);
+}
+requestAnimationFrame(parallaxLoop);
+
+/* ---------- donut ---------- */
+const container = document.getElementById('donut-container');
+const donutEl = document.getElementById('donut');
+const frostingMain = document.getElementById('frosting-main');
+const cinnamonOverlay = document.getElementById('cinnamon-overlay');
+const colors = ['#f7f4f4', '#fff562', '#2799d8', '#39a126', '#e7484c', '#ff741a', '#402626', '#ff4fa7'];
+const chocolateColors = ['#6b3f2a', '#4e321d', '#7a4a2a', '#3d2415', '#8b5a2b'];
+const pebbleShapes = [
+  '40% 60% 55% 45% / 50% 45% 55% 50%',
+  '60% 40% 45% 55% / 45% 55% 40% 60%',
+  '50% 50% 65% 35% / 40% 60% 40% 60%',
+  '35% 65% 40% 60% / 60% 40% 65% 35%'
+];
+let currentShape = 'long';
+document.querySelectorAll('[data-frosting]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-frosting]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    frostingMain.setAttribute('fill', btn.dataset.frosting);
+    frostingMain.setAttribute('fill-opacity', btn.dataset.opacity || 1);
+    cinnamonOverlay.setAttribute('opacity', btn.dataset.cinnamon ? 1 : 0);
+  });
+});
+document.querySelectorAll('[data-shape]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-shape]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentShape = btn.dataset.shape;
+  });
+});
+document.querySelectorAll('[data-dough]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-dough]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    donutEl.style.background = btn.dataset.dough;
+  });
+});
+container.addEventListener('click', (e) => {
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const dx = x - centerX;
+  const dy = y - centerY;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const holeRadius = rect.width * 0.09;
+  if (distance < holeRadius) {
+    return;
+  }
+  const roll = Math.random();
+  let sprinkleCount;
+  if (roll < 0.4) {
+    sprinkleCount = 1;
+  } else if (roll < 0.7) {
+    sprinkleCount = 2;
+  } else {
+    sprinkleCount = 3;
+  }
+  for (let i = 0; i < sprinkleCount; i++) {
+    const offsetX = x + (Math.random() * 16 - 8);
+    const offsetY = y + (Math.random() * 16 - 8);
+    const sprinkle = document.createElement('div');
+    sprinkle.style.left = `${offsetX}px`;
+    sprinkle.style.top = `${offsetY}px`;
+    if (currentShape === 'dot') {
+      sprinkle.className = 'sprinkle dot';
+      sprinkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    } else if (currentShape === 'pebble') {
+      sprinkle.className = 'sprinkle pebble';
+      const radius = pebbleShapes[Math.floor(Math.random() * pebbleShapes.length)];
+      const size = 9 + Math.random() * 5;
+      const ratio = 0.75 + Math.random() * 0.4;
+      sprinkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      sprinkle.style.borderRadius = radius;
+      sprinkle.style.width = `${size}px`;
+      sprinkle.style.height = `${size * ratio}px`;
+    } else if (currentShape === 'jimmies') {
+      sprinkle.className = 'sprinkle';
+      sprinkle.style.background = chocolateColors[Math.floor(Math.random() * chocolateColors.length)];
+      sprinkle.style.transform = `rotate(${Math.random() * 360}deg)`;
+    } else {
+      sprinkle.className = 'sprinkle';
+      sprinkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      sprinkle.style.transform = `rotate(${Math.random() * 360}deg)`;
+    }
+    container.appendChild(sprinkle);
+  }
+});
+document.getElementById('clear-btn').addEventListener('click', () => {
+  document.querySelectorAll('.sprinkle').forEach(s => s.remove());
+});
+
+/* ---------- "time wasted" timer ---------- */
+const startTime = Date.now();
+const timeWastedEl = document.getElementById('time-wasted');
+function updateTimer() {
+  const elapsedMs = Date.now() - startTime;
+  const totalSeconds = Math.floor(elapsedMs / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const pad = (num) => String(num).padStart(2, '0');
+  timeWastedEl.textContent = `time wasted since you opened this website: ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+setInterval(updateTimer, 1000);
+
+/* ---------- send a note (Web3Forms) ---------- */
+const WEB3FORMS_ACCESS_KEY = "1a4b9717-8771-4729-b69e-6644da7e0f42";
+const sendBtn = document.getElementById('send-note-btn');
+const statusEl = document.getElementById('send-status');
+const noteTextarea = document.getElementById('note-textarea');
+sendBtn.addEventListener('click', async () => {
+  statusEl.classList.remove('error');
+  if (WEB3FORMS_ACCESS_KEY === "PASTE_WEB3FORMS_ACCESS_KEY_HERE") {
+    statusEl.textContent = "i haven't finished setting this up yet, sorry!";
+    statusEl.classList.add('error');
+    return;
+  }
+  const note = noteTextarea.value.trim();
+  if (!note) {
+    statusEl.textContent = "write something first!";
+    statusEl.classList.add('error');
+    return;
+  }
+  sendBtn.disabled = true;
+  statusEl.textContent = "sending...";
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: "someone left a note on frizzlelamb.github.io!",
+        message: note
+      })
+    });
+    const result = await res.json();
+    if (result.success) {
+      statusEl.textContent = "sent! thank you, and have a good day.";
+      noteTextarea.value = '';
+    } else {
+      statusEl.textContent = "hmm, something went wrong. try again?";
+      statusEl.classList.add('error');
+    }
+  } catch (err) {
+    statusEl.textContent = "hmm, something went wrong. try again?";
+    statusEl.classList.add('error');
+  } finally {
+    sendBtn.disabled = false;
+  }
+});
+
+/* ---------- sounds ---------- */
+const hoverSound = document.getElementById('hover-sound');
+const clickSound = document.getElementById('click-sound');
+const closeSound = document.getElementById('close-sound');
+const secretSound = document.getElementById('secret-sound');
+hoverSound.volume = 0.35;
+clickSound.volume = 0.5;
+closeSound.volume = 0.5;
+secretSound.volume = 0.6;
+
+function playSound(audioEl) {
+  const clone = audioEl.cloneNode();
+  clone.volume = audioEl.volume;
+  clone.play().catch(() => {}); // ignore if browser blocks it
+}
+
+const interactiveEls = document.querySelectorAll(
+  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a'
+);
+interactiveEls.forEach(el => {
+  el.addEventListener('mouseenter', () => playSound(hoverSound));
+  el.addEventListener('click', () => playSound(clickSound));
+});
+
+/* ---------- the secret donut maker ---------- */
+const secretTrigger = document.getElementById('secret-trigger');
+const secretCompartment = document.getElementById('secret-compartment');
+secretTrigger.addEventListener('click', () => {
+  if (secretCompartment.classList.contains('open')) return;   // already revealed
+  playSound(secretSound);
+  secretCompartment.classList.add('open');
+  secretTrigger.classList.add('used');
+  setTimeout(() => {
+    secretCompartment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 300);
+});
+</script>
+
+<!-- ---------- emoji wall (Firebase) ---------- -->
+<script type="module">
+const firebaseConfig = {
+  authDomain: "frizzlelamb-s-website.firebaseapp.com",
+  databaseURL: "https://frizzlelamb-s-website-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "frizzlelamb-s-website",
+  storageBucket: "frizzlelamb-s-website.firebasestorage.app",
+  messagingSenderId: "393478386161",
+  appId: "1:393478386161:web:a697e298a6e3dc25175450",
+  measurementId: "G-69MYV8V2C2"
+};
+
+/* full emoji picker (loaded separately so the wall still works if the CDN hiccups) */
+import("https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js")
+  .catch(err => console.error("Emoji picker failed to load:", err));
+customElements.whenDefined('emoji-picker').then(() => {
+  const pickerEl = document.getElementById('emoji-picker');
+  if (!pickerEl || !pickerEl.shadowRoot) return;
+
+  /* hide the recently-used bar and the flags tab */
+  const style = document.createElement('style');
+  style.textContent = `
+    .favorites { display: none !important; }
+    .nav-button[data-group-id="9"] { display: none !important; }
+    .nav { grid-template-columns: repeat(8, 1fr) !important; }
+    .indicator { width: calc(100% / 8) !important; }
+  `;
+  pickerEl.shadowRoot.appendChild(style);
+
+  /* keep flags out of category lists and search results */
+  const pickerDb = pickerEl.database;
+  const noFlags = (list) => list.filter(e => e.group !== 9);
+  const byGroup = pickerDb.getEmojiByGroup.bind(pickerDb);
+  const bySearch = pickerDb.getEmojiBySearchQuery.bind(pickerDb);
+  pickerDb.getEmojiByGroup = async (g) => noFlags(await byGroup(g));
+  pickerDb.getEmojiBySearchQuery = async (q) => noFlags(await bySearch(q));
+});
+
+/* accepts exactly one emoji, but never a flag */
+const OTHER_FLAGS = new Set(
+  ['🏁', '🚩', '🎌', '🏴', '🏳️', '🏳️‍🌈', '🏳️‍⚧️', '🏴‍☠️'].map(s => s.replace(/[\uFE0F\u200D]/g, ''))
+);
+function isFlagEmoji(s) {
+  return /\p{Regional_Indicator}|\u{1F3F4}[\u{E0020}-\u{E007F}]/u.test(s) ||
+         OTHER_FLAGS.has(s.replace(/[\uFE0F\u200D]/g, ''));
+}
+const segmenter = (typeof Intl !== 'undefined' && Intl.Segmenter) ? new Intl.Segmenter() : null;
+function isSingleEmoji(s) {
+  if (typeof s !== 'string' || !s || s.length > 32) return false;
+  if (segmenter && [...segmenter.segment(s)].length !== 1) return false;
+  if (isFlagEmoji(s)) return false;
+  return /\p{Extended_Pictographic}|\p{Regional_Indicator}|\u20E3/u.test(s);
+}
+
+const MAX_SHOWN = 60;
+const TRAY_HIDE_DELAY_MS = 2000;              // how long the tray lingers before fading away
+const CLOSE_DURATION_S = 0.5;                 // how long each emoji takes to fade away when the pin is clicked again
+const CLOSE_STAGGER_S = 0.3;                  // emojis start fading at random moments within this window (0 = all at once)
+const LAST_SENT_KEY = 'frizzlelamb-last-emoji-day';
+const HINT = "leave an emoji on the page!";
+
+const toggleBtn = document.getElementById('board-toggle-btn');
+const layer = document.getElementById('emoji-layer');
+const tray = document.getElementById('emoji-tray');
+const scatter = document.getElementById('emoji-scatter');
+const picker = document.getElementById('emoji-picker');
+const boardStatus = document.getElementById('board-status');
+const QUICK_EMOJIS = ['🤓','🦀','🐑','🦐','⭐','🧀','🍰','🎨','🏇','🥀'];
+const quickRow = document.getElementById('quick-emojis');
+const moreToggle = document.getElementById('more-toggle');
+const moreWrap = document.getElementById('more-wrap');
+
+layer.style.setProperty('--out-dur', `${CLOSE_DURATION_S}s`);
+
+let fb = null;
+let emojisRef = null;
+let settled = false;
+let sending = false;    // stops double-clicks from sending twice
+let statusTimer = null;
+let trayTimer = null;
+let closeTimer = null;
+
+boardStatus.textContent = HINT;
+
+/* ----- status line ----- */
+function setStatus(msg, revert = true) {
+  boardStatus.textContent = msg;
+  clearTimeout(statusTimer);
+  if (revert) {
+    statusTimer = setTimeout(() => { boardStatus.textContent = HINT; }, 2500);
+  }
+}
+
+function todayString() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+let lastSentDay = '';
+try { lastSentDay = localStorage.getItem(LAST_SENT_KEY) || ''; } catch (e) {}
+
+function saveLastSentDay(day) {
+  lastSentDay = day;
+  try {
+    if (day) localStorage.setItem(LAST_SENT_KEY, day);
+    else localStorage.removeItem(LAST_SENT_KEY);
+  } catch (e) {}
+}
+
+// how many ms until they're allowed to send again (0 = allowed now)
+function msUntilNextEmoji() {
+  if (lastSentDay !== todayString()) return 0;
+  const now = new Date();
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  return midnight - now;
+}
+
+function formatWait(ms) {
+  const totalMinutes = Math.ceil(ms / 60000);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours && minutes) return `${hours}h ${minutes}m`;
+  if (hours) return `${hours}h`;
+  return `${minutes}m`;
+}
+
+/* ----- tray helpers ----- */
+
+// dims + locks the emojis
+function setPickerEnabled(enabled) {
+  picker.classList.toggle('locked', !enabled);
+  picker.toggleAttribute('inert', !enabled);
+  quickRow.classList.toggle('locked', !enabled);
+  quickRow.toggleAttribute('inert', !enabled);
+}
+
+// expands / collapses the full emoji picker
+function setMoreOpen(open) {
+  moreWrap.classList.toggle('open', open);
+  moreToggle.setAttribute('aria-expanded', String(open));
+}
+
+// "used" = already sent today
+function setUsedMode(used) {
+  setPickerEnabled(!used);
+  if (used) setMoreOpen(false);
+}
+
+function scheduleTrayHide(ms) {
+  clearTimeout(trayTimer);
+  trayTimer = setTimeout(() => tray.classList.add('gone'), ms);
+}
+
+function openTray() {
+  clearTimeout(trayTimer);
+  tray.classList.remove('gone');
+  setMoreOpen(false);
+  const wait = msUntilNextEmoji();
+  if (wait > 0) {
+    setUsedMode(true);
+    setStatus(`you already left one today! come back in ${formatWait(wait)}.`, false);
+    scheduleTrayHide(TRAY_HIDE_DELAY_MS);
+  } else {
+    setUsedMode(false);
+    setStatus(HINT, false);
+  }
+}
+
+/* 1) show / hide the wall */
+function showBoard() {
+  clearTimeout(closeTimer);
+  layer.classList.remove('closing');
+  layer.classList.add('revealed');
+  toggleBtn.setAttribute('aria-pressed', 'true');
+  relayoutEmojis();
+  openTray();
+}
+
+function hideBoard() {
+  clearTimeout(trayTimer);
+  tray.classList.add('gone');
+  toggleBtn.setAttribute('aria-pressed', 'false');
+
+  // every emoji gets its own random start time
+  scatter.querySelectorAll('.scatter-emoji').forEach(el => {
+    el.style.setProperty('--out-d', `${Math.random() * CLOSE_STAGGER_S}s`);
+  });
+  layer.classList.add('closing');
+
+  // hides layer once the last emoji has finished fading
+  clearTimeout(closeTimer);
+  closeTimer = setTimeout(() => {
+    layer.classList.remove('revealed', 'closing');
+  }, (CLOSE_DURATION_S + CLOSE_STAGGER_S) * 1000 + 50);
+}
+
+toggleBtn.addEventListener('click', () => {
+  const isOpen = layer.classList.contains('revealed') && !layer.classList.contains('closing');
+  if (isOpen) hideBoard();
+  else showBoard();
+});
+
+document.getElementById('tray-close').addEventListener('click', () => {
+  clearTimeout(trayTimer);
+  tray.classList.add('gone');
+  try { playSound(closeSound); } catch (e) {}
+});
+
+moreToggle.addEventListener('click', () => {
+  setMoreOpen(!moreWrap.classList.contains('open'));
+  try { playSound(clickSound); } catch (e) {}
+});
+
+/* 2) */
+picker.addEventListener('emoji-click', (e) => sendEmoji(e.detail.unicode));
+
+QUICK_EMOJIS.forEach(emoji => {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'quick-btn';
+  btn.textContent = emoji;
+  btn.setAttribute('aria-label', `send ${emoji}`);
+  btn.addEventListener('click', () => sendEmoji(emoji));
+  quickRow.appendChild(btn);
+});
+
+/* 3) */
+function seededRandom(str) {
+  let h = 1779033703 ^ str.length;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  let a = h >>> 0;
+  return function () {
+    a |= 0;
+    a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* keep emojis off the center */
+const EMOJI_PAD = 16;   // breathing room around the text and links (px)
+const EDGE = 8;         // how close to the screen edge an emoji may sit (px)
+let zones = null;       // cached free areas, refreshed when the window changes
+
+function contentBox() {
+  let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
+  document.querySelectorAll('.header, .links-section, .divider, .icon-row').forEach(el => {
+    const rc = el.getBoundingClientRect();
+    if (!rc.width && !rc.height) return;
+    l = Math.min(l, rc.left);
+    t = Math.min(t, rc.top);
+    r = Math.max(r, rc.right);
+    b = Math.max(b, rc.bottom);
+  });
+  if (l === Infinity) return null;
+  return { l: l - EMOJI_PAD, t: t - EMOJI_PAD, r: r + EMOJI_PAD, b: b + EMOJI_PAD };
+}
+
+function getZones() {
+  const w = layer.clientWidth;
+  const h = layer.clientHeight;
+  const full = { l: EDGE, t: EDGE, r: w - EDGE, b: h - EDGE };
+  let bands = [full];
+  const box = contentBox();
+  if (box) {
+    const top = Math.max(box.t, EDGE);
+    const bottom = Math.min(box.b, h - EDGE);
+    bands = [
+      { l: EDGE, t: EDGE, r: w - EDGE, b: box.t },
+      { l: EDGE, t: box.b, r: w - EDGE, b: h - EDGE },
+      { l: EDGE, t: top, r: box.l, b: bottom },
+      { l: box.r, t: top, r: w - EDGE, b: bottom }
+    ];
+  }
+  const tw = document.getElementById('time-wasted').getBoundingClientRect();
+  const avoid = { l: tw.left - 8, t: tw.top - 8, r: tw.right + 8, b: tw.bottom + 8 };
+  return { full, bands, avoid };
+}
+
+function positionEmoji(el, z) {
+  const size = Number(el.dataset.size) * 1.25;
+  const rand = seededRandom(el.dataset.key + '-pos');
+  let pool = z.bands.filter(b => b.r - b.l >= size && b.b - b.t >= size);
+  if (!pool.length) pool = [z.full];
+  const weights = pool.map(b => (b.r - b.l - size + 1) * (b.b - b.t - size + 1));
+  const total = weights.reduce((sum, v) => sum + v, 0);
+  let x = z.full.l, y = z.full.t;
+  for (let tries = 0; tries < 8; tries++) {
+    let pick = rand() * total;
+    let band = pool[pool.length - 1];
+    for (let i = 0; i < pool.length; i++) {
+      pick -= weights[i];
+      if (pick <= 0) { band = pool[i]; break; }
+    }
+    x = band.l + rand() * Math.max(0, band.r - band.l - size);
+    y = band.t + rand() * Math.max(0, band.b - band.t - size);
+    const hitsTimer = x < z.avoid.r && x + size > z.avoid.l && y < z.avoid.b && y + size > z.avoid.t;
+    if (!hitsTimer) break;
+  }
+  el.style.left = `${x}px`;
+  el.style.top = `${y}px`;
+}
+
+function relayoutEmojis() {
+  zones = getZones();
+  scatter.querySelectorAll('.scatter-emoji').forEach(el => positionEmoji(el, zones));
+}
+
+let relayoutTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(relayoutTimer);
+  relayoutTimer = setTimeout(relayoutEmojis, 100);
+});
+window.addEventListener('load', relayoutEmojis);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayoutEmojis);
+
+function addScatterEmoji(key, emoji) {
+  const rand = seededRandom(key);
+  const rotation = rand() * 50 - 25;
+  const size = 24 + rand() * 18;
+  const delay = rand() * 0.6;
+
+  const el = document.createElement('span');
+  el.className = 'scatter-emoji';
+  el.textContent = emoji;
+  el.dataset.key = key;
+  el.dataset.size = size;
+  el.style.setProperty('--r', `${rotation}deg`);
+  el.style.setProperty('--s', `${size}px`);
+  el.style.setProperty('--d', `${settled ? 0 : delay}s`);
+  scatter.appendChild(el);
+  if (!zones) zones = getZones();
+  positionEmoji(el, zones);
+
+  while (scatter.children.length > MAX_SHOWN) {
+    scatter.firstElementChild.remove();
+  }
+}
+
+/* 4) */
+async function sendEmoji(emoji) {
+  if (sending) return;
+  if (!isSingleEmoji(emoji)) return;
+  if (!fb || !emojisRef) {
+    setStatus("the wall isn't connected yet, sorry!");
+    return;
+  }
+  const wait = msUntilNextEmoji();
+  if (wait > 0) {
+    setStatus(`one per day! come back in ${formatWait(wait)}.`, false);
+    return;
+  }
+
+  sending = true;
+  const previousDay = lastSentDay;
+  saveLastSentDay(todayString());
+  setPickerEnabled(false);
+  setStatus("sending...", false);
+  try { playSound(clickSound); } catch (e) {}
+
+  try {
+    await fb.push(emojisRef, { e: emoji, t: fb.serverTimestamp() });
+    setUsedMode(true);          // emojis stay visible, just dimmed and locked
+    setStatus("sent!", false);
+    scheduleTrayHide(TRAY_HIDE_DELAY_MS);
+  } catch (err) {
+    console.error("Emoji send failed:", err);
+    saveLastSentDay(previousDay);
+    setPickerEnabled(true);
+    setStatus("hmm, that didn't send. try again?");
+  } finally {
+    sending = false;
+  }
+}
+
+/* 5) */
+async function connect() {
+  try {
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+    fb = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js");
+
+    const app = initializeApp(firebaseConfig);
+    const db = fb.getDatabase(app);
+    emojisRef = fb.ref(db, 'emojis');
+
+    fb.onChildAdded(
+      fb.query(emojisRef, fb.limitToLast(MAX_SHOWN)),
+      (snap) => {
+        const data = snap.val();
+        if (!data || !isSingleEmoji(data.e)) return;
+        addScatterEmoji(snap.key, data.e);
+      },
+      (err) => {
+        console.error("Can't read the wall:", err);
+        setStatus("the wall can't be read right now. (check the console)", false);
+      }
+    );
+
+    setTimeout(() => { settled = true; }, 2000);
+  } catch (err) {
+    console.error("Emoji wall failed to connect:", err);
+    fb = null;
+    emojisRef = null;
+    setStatus("the wall couldn't connect. (check the console)", false);
+  }
+}
+connect();
+</script>
+</body>
+</html>
