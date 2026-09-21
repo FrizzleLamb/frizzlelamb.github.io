@@ -1261,7 +1261,7 @@
       </li>
       <li>
         <span class="credit-role">sounds</span>
-        <span class="credit-what">Minimal UI pack – pops clicks ticks.wav by <a href="https://freesound.org/s/538236/" target="_blank" rel="noopener noreferrer">DesignDean</a><br/>Whoop by <a href="https://freesound.org/s/825578/" target="_blank" rel="noopener noreferrer">akelley6</a></span>
+        <span class="credit-what">Minimal UI pack – pops clicks ticks.wav by <a href="https://freesound.org/s/538236/" target="_blank" rel="noopener noreferrer">DesignDean</a><br/>Whoop by <a href="https://freesound.org/s/825578/" target="_blank" rel="noopener noreferrer">akelley6</a><br/>Light Switch Turn Off Sounds by <a href="https://freesound.org/people/ChrisTutorials/sounds/440499/">ChrisTutorials</a></span>
       </li>
     </ul>
     <p class="credits-note">thank you to everyone who makes their work free to use!</p>
@@ -1296,6 +1296,7 @@
 <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
 <audio id="close-sound" src="sounds/close.mp3" preload="auto"></audio>
 <audio id="secret-sound" src="sounds/secret.mp3" preload="auto"></audio>
+<audio id="switch-sound" src="sounds/switch.mp3" preload="auto"></audio>
 
 <script>
 /* ---------- popups ---------- */
@@ -1543,10 +1544,12 @@ const hoverSound = document.getElementById('hover-sound');
 const clickSound = document.getElementById('click-sound');
 const closeSound = document.getElementById('close-sound');
 const secretSound = document.getElementById('secret-sound');
+const switchSound = document.getElementById('switch-sound');
 hoverSound.volume = 0.35;
 clickSound.volume = 0.5;
 closeSound.volume = 0.5;
 secretSound.volume = 0.4;
+switchSound.volume = 0.25;
 
 function playSound(audioEl) {
   const clone = audioEl.cloneNode();
@@ -1559,7 +1562,8 @@ const interactiveEls = document.querySelectorAll(
 );
 interactiveEls.forEach(el => {
   el.addEventListener('mouseenter', () => playSound(hoverSound));
-  el.addEventListener('click', () => playSound(clickSound));
+  /* my icon gets its own switch sound instead of the normal click */
+  el.addEventListener('click', () => playSound(el === avatarBtn ? switchSound : clickSound));
 });
 
 /* ---------- the secret donut maker ---------- */
