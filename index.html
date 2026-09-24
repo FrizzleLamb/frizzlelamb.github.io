@@ -310,6 +310,11 @@
   .gallery-modal .modal-title {
     margin-bottom: 32px;
   }
+  .gallery-thumb, .gallery-stage-img {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
   .modal-close {
     position: absolute;
     top: 10px;
@@ -714,7 +719,7 @@
     background-color: var(--paper-shade);
     border: 2.5px solid var(--ink);
     border-radius: var(--wobble-a);
-    transition: opacity 0.13s ease;
+    transition: opacity 0.22s ease;
   }
   .gallery-stage-img.is-switching {
     opacity: 0;
@@ -1048,6 +1053,24 @@
       font-size: 9px;
     }
   }
+
+    #donut-mount {
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+    #donut-mount.donut-fade-out {
+      opacity: 0;
+    }
+    #donut-mount.donut-fade-in {
+      opacity: 1;
+    }
+    .donut-loading {
+      padding: 10px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--ink-soft);
+      opacity: 0.8;
+    }
 </style>
 </head>
 <body>
@@ -1128,13 +1151,13 @@
 <hr class="divider">
 
 <div class="icon-row">
-  <!-- folder -->
-  <button class="donut-toggle" data-open="gallery-modal-overlay" aria-label="see selected frizzlelamb artworks" aria-haspopup="dialog" aria-expanded="false">
-    <svg class="icon" aria-hidden="true"><use href="#icon-folder"/></svg>
-  </button>
   <!-- question mark -->
   <button class="donut-toggle" data-open="faq-modal-overlay" aria-label="frequently asked questions" aria-haspopup="dialog" aria-expanded="false">
     <svg class="icon" aria-hidden="true"><use href="#icon-faq"/></svg>
+  </button>
+  <!-- folder -->
+  <button class="donut-toggle" data-open="gallery-modal-overlay" aria-label="see selected frizzlelamb artworks" aria-haspopup="dialog" aria-expanded="false">
+    <svg class="icon" aria-hidden="true"><use href="#icon-folder"/></svg>
   </button>
   <!-- mail -->
   <button class="donut-toggle" data-open="note-modal-overlay" aria-label="send me a note" aria-haspopup="dialog" aria-expanded="false">
@@ -1258,7 +1281,7 @@
       <div class="gallery-carousel">
         <button id="gallery-prev" class="gallery-nav" type="button" aria-label="previous piece">‹</button>
         <div class="gallery-stage">
-          <img id="gallery-stage-img" class="gallery-stage-img" src="" alt="">
+          <img id="gallery-stage-img" class="gallery-stage-img" src="" alt="" draggable="false" oncontextmenu="return false;">
           <span id="gallery-stage-caption" class="gallery-stage-caption"></span>
         </div>
         <button id="gallery-next" class="gallery-nav" type="button" aria-label="next piece">›</button>
@@ -1509,7 +1532,7 @@ const donutMount = document.getElementById('donut-mount');
 let donutLoaded = false;
 
 secretTrigger.addEventListener('click', async () => {
-  if (secretCompartment.classList.contains('open')) return;   // already revealed
+  if (secretCompartment.classList.contains('open')) return;
   playSound(secretSound);
   secretCompartment.classList.add('open');
   secretTrigger.classList.add('used');
@@ -1520,15 +1543,33 @@ secretTrigger.addEventListener('click', async () => {
 
   if (!donutLoaded) {
     donutLoaded = true;
+    donutMount.innerHTML = '<div class="donut-loading">mixing the dough...</div>';
+
     try {
-      const res = await fetch('donut-panel.html');
-      donutMount.innerHTML = await res.text();
+      const [html] = await Promise.all([
+        fetch('donut-panel.html').then(res => res.text()),
+        new Promise(resolve => setTimeout(resolve, 300)) // time
+      ]);
+
       const script = document.createElement('script');
       script.src = 'donut.js';
-      script.onload = () => window.initDonut();
+      const scriptReady = new Promise((resolve, reject) => {
+        script.onload = resolve;
+        script.onerror = reject;
+      });
       document.body.appendChild(script);
+      await scriptReady;
+
+      donutMount.classList.add('donut-fade-out');
+      await new Promise(r => setTimeout(r, 250));
+
+      donutMount.innerHTML = html;
+      window.initDonut();
+      donutMount.classList.remove('donut-fade-out');
+      donutMount.classList.add('donut-fade-in');
     } catch (err) {
       console.error('Donut maker failed to load:', err);
+      donutMount.innerHTML = '<p>oh no! the donutmaker is gone, sorry!</p>';
     }
   }
 });
@@ -1558,12 +1599,23 @@ function applyGalleryStage() {
 
 function goToGalleryPiece(i) {
   if (!ART_SAMPLES.length) return;
-  galleryIndex = (i + ART_SAMPLES.length) % ART_SAMPLES.length;
-  galleryStageImg.classList.add('is-switching');
-  setTimeout(() => {
-    applyGalleryStage();
-    galleryStageImg.classList.remove('is-switching');
-  }, 130);
+  const nextIndex = (i + ART_SAMPLES.length) % ART_SAMPLES.length;
+  const nextItem = ART_SAMPLES[nextIndex];
+
+  const preloader = new Image();
+  preloader.onload = swap;
+  preloader.onerror = swap;
+  preloader.src = nextItem.src;
+
+  function swap() {
+    galleryStageImg.classList.add('is-switching');
+    setTimeout(() => {
+      galleryIndex = nextIndex;
+      applyGalleryStage();
+      void galleryStageImg.offsetWidth;
+      galleryStageImg.classList.remove('is-switching');
+    }, 220);
+  }
 }
 
 function setGalleryOverview(showOverview) {
@@ -1585,6 +1637,8 @@ function renderGalleryGrid() {
     thumbImg.src = item.src;
     thumbImg.alt = item.caption || '';
     thumbImg.loading = 'lazy';
+    thumbImg.oncontextmenu = () => false;
+    thumbImg.draggable = false;
     const thumbCaption = document.createElement('span');
     thumbCaption.className = 'gallery-caption';
     thumbCaption.textContent = item.caption || '';

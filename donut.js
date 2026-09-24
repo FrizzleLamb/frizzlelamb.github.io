@@ -86,7 +86,6 @@ window.initDonut = function () {
     document.querySelectorAll('.sprinkle').forEach(s => s.remove());
   });
 
-  // hook up click sounds for the newly-injected buttons
   document.querySelectorAll('#donut-mount .option-btn, #donut-mount .clear-mini-btn')
     .forEach(el => el.addEventListener('click', () => playSound(clickSound)));
 };
