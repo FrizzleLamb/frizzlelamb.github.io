@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <!--
    ===================================================================
-   👋 HI THERE CURIOUS PERSON! 
-   If you're inspecting the source code, please disregard any 
-   // OR <!-- > OR /* */ comment blocks! They are personal notes 
-   and workflow memos I leave behind while building my website.
+   👋 HI THERE CURIOUS PERSON!
    ===================================================================
 -->
 <html>
@@ -36,7 +33,7 @@
     --paper-shade: #dbe6dd;
     --paper-dots: #c9d7cd;
     --link-hover: #33805f; 
-    --overlay: rgba(20, 32, 25, 0.4);   /* dim layer behind popups */
+    --overlay: rgba(20, 32, 25, 0.4);
 
     --page: var(--paper);
     --page-shade: var(--paper-shade);
@@ -50,24 +47,21 @@
 
     --soft-shadow: 0 2px 5px rgba(20, 32, 25, 0.12);
 
-    /* hover */
     --hatch-line: rgba(20, 32, 25, 0.2);
     --hatch: repeating-linear-gradient(135deg, transparent 0 5px, var(--hatch-line) 5px 6.5px);
   }
 
-  /* night mode */
   :root[data-theme="night"] {
     color-scheme: dark;
     --ink: #d8efe9;
     --ink-soft: #a3c7c0;
-    --ink-light: #5a8b90;
+    --ink-light: #6b8889;
     --paper: #181d1c;
     --paper-shade: #0b1c20;
     --paper-dots: #1d3c43;
     --link-hover: #7fd4b6;
     --overlay: rgba(3, 12, 15, 0.55);
     --hatch-line: rgba(216, 239, 233, 0.16);
-    /* night background */
     --page: #1b2122;
     --page-shade: #293133;
     --page-dots: #384245;
@@ -175,7 +169,6 @@
     gap: 14px;
   }
 
-  /* link buttons */
   .link-row a {
     text-decoration: none;
     color: var(--ink);
@@ -206,6 +199,54 @@
     color: var(--paper);
   }
 
+  .archive-link {
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    margin-top: -4px;
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--ink-soft);
+    opacity: 0.65;
+    text-decoration: underline dotted;
+    cursor: pointer;
+  }
+  .archive-link:hover {
+    opacity: 1;
+  }
+  .archive-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .archive-list a {
+    text-decoration: none;
+    border: 2px solid var(--ink-light);
+    border-radius: var(--wobble-a);
+    padding: 8px 14px;
+    font-weight: bold;
+    font-size: 15px;
+    background: var(--paper);
+    text-align: center;
+    transition: transform 0.15s ease;
+    color: var(--ink-light);
+  }
+  .archive-list a:nth-child(even) {
+    border-radius: var(--wobble-b);
+  }
+  .archive-list a:hover {
+    background-image: var(--hatch);
+    transform: translateY(-2px) rotate(-1deg);
+    color: var(--ink-light);
+  }
+  .archive-note {
+    margin: 14px 0 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
   .divider {
     width: 100%;
     max-width: 640px;
@@ -214,7 +255,6 @@
     border-top: 2px dashed var(--ink);
   }
 
-  /* icon button row */
   .icon-row {
     display: flex;
     gap: 6px;
@@ -304,6 +344,9 @@
   .credits-modal {
     max-width: 480px;
   }
+  .archive-modal {
+    max-width: 360px;
+  }
   .gallery-modal {
     max-width: 780px;
   }
@@ -363,8 +406,16 @@
     gap: 24px;
     flex-wrap: wrap;
   }
+  .gallery-overview-note {
+    margin: 4px 6px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .gallery-overview-note[hidden] {
+    display: none;
+  }
 
-  /* faq popup */
   .faq-list {
     display: flex;
     flex-direction: column;
@@ -428,7 +479,6 @@
     line-height: 1.5;
   }
 
-  /* the secret compartment */
   .secret-trigger {
     background: none;
     border: none;
@@ -466,7 +516,6 @@
     border-top: 2px dashed var(--ink-light);
   }
 
-  /* secret unlocked */
   .faq-item.unlocked {
     background: #fffaf0;
     border-color: #e8c873;
@@ -512,7 +561,6 @@
     text-decoration-style: solid;
   }
 
-  /* note popup */
   .send-section {
     display: flex;
     flex-direction: column;
@@ -541,6 +589,30 @@
   #note-textarea::placeholder {
     color: var(--ink-soft);
     opacity: 0.7;
+  }
+  .captcha-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-height: 0;
+    margin: -6px 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.25s ease, margin 0.25s ease, opacity 0.2s ease;
+  }
+  .captcha-wrap.show {
+    max-height: 100px;
+    margin: 0;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @media (max-width: 380px) {
+    .captcha-wrap .h-captcha {
+      transform: scale(0.85);
+      transform-origin: center top;
+    }
   }
   #send-note-btn {
     padding: 8px 24px;
@@ -574,7 +646,6 @@
     text-underline-offset: 3px;
   }
 
-  /* credits popup */
   .credits-list {
     list-style: none;
     margin: 0;
@@ -607,7 +678,6 @@
     color: var(--ink-soft);
   }
 
-  /* art gallery popup */
   .gallery-browse[hidden],
   .gallery-grid[hidden] {
     display: none;
@@ -683,7 +753,7 @@
     justify-content: center;
     padding: 0 53px;
     gap: 15px;
-    margin-bottom: 25px; /* space below artwork */
+    margin-bottom: 25px;
   }
   .gallery-stage {
     position: relative;
@@ -772,7 +842,6 @@
 #gallery-prev { left: 0; }
 #gallery-next { right: 0; }
 
-  /* scattered emojis */
   .emoji-layer {
     position: fixed;
     inset: 0;
@@ -817,7 +886,6 @@
     50%      { transform: translateY(-6px) rotate(var(--r, 0deg)); }
   }
 
-  /* fade out only, no floating */
   .emoji-layer.closing .scatter-emoji {
     opacity: 0;
     animation-play-state: paused;
@@ -833,7 +901,6 @@
     }
   }
 
-  /* emoji tray (send emojis) */
   .emoji-tray {
     position: absolute;
     left: 50%;
@@ -881,7 +948,6 @@
     padding: 4px;
     font-family: inherit;
   }
-  /* quick send emojis will be dimmed + locked */
   .quick-emojis {
     display: flex;
     flex-wrap: wrap;
@@ -919,7 +985,6 @@
     transform: scale(0.9);
   }
 
-  /* more options */
   .more-toggle {
     display: block;
     margin: 8px auto 0;
@@ -962,7 +1027,6 @@
     margin-top: 8px;
   }
 
-  /* emoji picker */
   emoji-picker {
     width: 100%;
     height: min(280px, 40vh);
@@ -984,7 +1048,6 @@
     opacity: 0.4;
   }
 
-  /* bottom right credits and version */
   #version-tag {
     position: fixed;
     bottom: 4px;
@@ -1110,7 +1173,6 @@
     <path d="M14 24H40" stroke-width="4.8"/>
   </symbol>
 
-  <!-- emojis outline -->
   <filter id="emoji-outline" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
     <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="thick"/>
     <feFlood style="flood-color: var(--ink)"/>
@@ -1123,12 +1185,11 @@
 </svg>
 
 <div class="header">
-  <!-- my icon -->
   <button id="avatar-btn" class="avatar-btn" type="button" aria-label="switch between day and night mode" aria-pressed="false">
     <img id="avatar" class="avatar" src="images/icon.png" alt="" draggable="false" oncontextmenu="return false;" data-day="images/icon.png" data-night="images/icon2.png" onerror="if (this.src.endsWith(this.dataset.night)) { this.src = this.dataset.day; } else { this.parentNode.style.display = 'none'; }">
   </button>
   <h1>@FrizzleLamb</h1>
-  <p>hello! i'm frizzle. i like to make digital art and eat cheesecakes.</p>
+  <p>hello! i'm Frizzle. i like to make digital art and eat cheesecakes.</p>
 </div>
 <div class="links-section">
   <div class="link-group commission">
@@ -1143,40 +1204,46 @@
     <span class="label">where i post art</span>
     <div class="link-row">
       <a href="https://x.com/FrizzleLamb" target="_blank" rel="noopener noreferrer">twitter</a>
-      <a href="https://bsky.app/profile/frizzlelamb.bsky.social" target="_blank" rel="noopener noreferrer">bluesky</a>
-      <a href="https://www.pixiv.net/en/users/65300551" target="_blank" rel="noopener noreferrer">pixiv</a>
+      <a href="https://www.tumblr.com/frizzles-artarchive" target="_blank" rel="noopener noreferrer">tumblr</a>
     </div>
+    <button type="button" class="archive-link" data-open="archive-modal-overlay">archived accounts</button>
   </div>
 </div>
 <hr class="divider">
 
 <div class="icon-row">
-  <!-- question mark -->
   <button class="donut-toggle" data-open="faq-modal-overlay" aria-label="frequently asked questions" aria-haspopup="dialog" aria-expanded="false">
     <svg class="icon" aria-hidden="true"><use href="#icon-faq"/></svg>
   </button>
-  <!-- folder -->
   <button class="donut-toggle" data-open="gallery-modal-overlay" aria-label="see selected frizzlelamb artworks" aria-haspopup="dialog" aria-expanded="false">
     <svg class="icon" aria-hidden="true"><use href="#icon-folder"/></svg>
   </button>
-  <!-- mail -->
   <button class="donut-toggle" data-open="note-modal-overlay" aria-label="send me a note" aria-haspopup="dialog" aria-expanded="false">
     <svg class="icon" aria-hidden="true"><use href="#icon-note"/></svg>
   </button>
-  <!-- pin -->
   <button id="board-toggle-btn" class="donut-toggle" aria-label="show or hide the emoji wall" aria-pressed="false">
     <svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg>
   </button>
 </div>
 
-<!-- faq -->
+<div id="archive-modal-overlay" class="modal-overlay">
+  <div class="donut-modal archive-modal" role="dialog" aria-modal="true" aria-label="archived accounts">
+    <button class="modal-close" aria-label="close">✕</button>
+    <p class="modal-title">here lies...</p>
+    <div class="archive-list">
+      <a href="https://www.pixiv.net/en/users/65300551" target="_blank" rel="noopener noreferrer">pixiv</a>
+      <a href="https://bsky.app/profile/frizzlelamb.bsky.social" target="_blank" rel="noopener noreferrer">bluesky</a>
+    </div>
+    <p class="archive-note">as of oct 2026, i've decided to strictly post in just twitter (and archive old art in tumblr), but you can still browse here!</p>
+  </div>
+</div>
+
 <div id="faq-modal-overlay" class="modal-overlay">
   <div class="donut-modal faq-modal" role="dialog" aria-modal="true" aria-label="faq">
     <button class="modal-close" aria-label="close">✕</button>
     <p class="modal-title">frequently asked questions</p>
     <div class="faq-list">
 
-      <!-- questions and answers -->
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1">
           <span>are your commissions open?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1191,7 +1258,7 @@
           <span>how can i commission you?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a2">
-          <div class="faq-a"><p>you can go through vgen or ko-fi, which are both connected to my paypal for payment. for inquiries and updates, you can contact me on vgen, twitter, or discord (same username).</p></div>
+          <div class="faq-a"><p>you can go through vgen or ko-fi, which are both connected to my paypal for payment.</p><p>for updates and other inquiries, you can contact me on twitter or discord (same username). to make sure you don't get marked for spam, include <b>"cheesecake"</b> in your message. otherwise i might ignore it.</p></div>
         </div>
       </div>
 
@@ -1215,28 +1282,37 @@
 
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5">
-          <span>what's the <svg class="icon icon-inline" aria-hidden="true"><use href="#icon-pin"/></svg> for?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+          <span>can i use / repost your art?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a5">
-          <div class="faq-a"><p>it shows the emojis other visitors have left on the page. you can add any emoji once a day!</p></div>
+          <div class="faq-a"><p><b>yes!</b> you're free to use them as a dp, header, etc — but please credit me (or at the very least don't remove my signature).</p><p>reposting my artwork is allowed if you 1) ASK ME FIRST, 2) do NOT pose as me, 3) do not remove my credits, and 4) do not repost on the same platforms i'm active on.</p>
+          </div>
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6">
-          <span>didn't you use to make <a href="https://www.youtube.com/@FrizzleLamb/" target="_blank" rel="noopener noreferrer">youtube videos</a>?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+          <span>what's the <svg class="icon icon-inline" aria-hidden="true"><use href="#icon-pin"/></svg> for?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a6">
-          <div class="faq-a"><p>yes... but i've retired ever since youtube updated their TOS which consequently pulled me out of their monetization program, so it wasn't worth it anymore.</p></div>
+          <div class="faq-a"><p>it shows the emojis other visitors have left on the page (might not work in all browsers). you can add any emoji once a day!</p></div>
         </div>
       </div>
 
-      <!-- the secret one -->
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7">
-          <span>where did the donutmaker go?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+          <span>didn't you use to make youtube videos?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a7">
+          <div class="faq-a"><p><a href="https://www.youtube.com/@FrizzleLamb/" target="_blank" rel="noopener noreferrer">yes. . .</a> but i've retired ever since youtube updated their TOS which consequently pulled me out of their monetization program, so it wasn't worth it anymore.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8">
+          <span>where did the donutmaker go?</span><span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a-wrap" id="faq-a8">
           <div class="faq-a">
             <p><button id="secret-trigger" class="secret-trigger" type="button">what donutmaker</button></p>
 
@@ -1255,20 +1331,21 @@
   </div>
 </div>
 
-<!-- note popup -->
 <div id="note-modal-overlay" class="modal-overlay">
   <div class="donut-modal note-modal" role="dialog" aria-modal="true" aria-label="send me a note">
     <button class="modal-close" aria-label="close">✕</button>
     <div class="send-section">
       <span class="label">send me a note! i won't be able to reply, but i read every single one :)</span>
-      <textarea id="note-textarea" placeholder="leave words of wisdom here..."></textarea>
+      <textarea id="note-textarea" placeholder="tell me something..."></textarea>
+      <div class="captcha-wrap">
+        <div class="h-captcha" data-captcha="true"></div>
+      </div>
       <button id="send-note-btn">do it</button>
       <div id="send-status"></div>
     </div>
   </div>
 </div>
 
-<!-- art gallery popup -->
 <div id="gallery-modal-overlay" class="modal-overlay">
   <div class="donut-modal gallery-modal" role="dialog" aria-modal="true" aria-label="art samples">
     <button id="gallery-view-toggle" class="gallery-corner-btn" type="button" aria-label="overview" aria-pressed="false">
@@ -1288,12 +1365,11 @@
       </div>
     </div>
 
-    <!-- populated by JS ART_SAMPLES -->
     <div id="gallery-grid" class="gallery-grid" hidden></div>
+    <p id="gallery-overview-note" class="gallery-overview-note" hidden>to see more of my past artworks, visit the links on the main page!</p>
   </div>
 </div>
 
-<!-- credits popup -->
 <div id="credits-modal-overlay" class="modal-overlay">
   <div class="donut-modal credits-modal" role="dialog" aria-modal="true" aria-label="credits">
     <button class="modal-close" aria-label="close">✕</button>
@@ -1316,7 +1392,6 @@
   </div>
 </div>
 
-<!-- emojis + tray -->
 <div id="emoji-layer" class="emoji-layer">
   <div id="emoji-scatter"></div>
   <div id="emoji-tray" class="emoji-tray">
@@ -1336,7 +1411,7 @@
 
 <div id="version-tag">
   <button class="credits-link" type="button" data-open="credits-modal-overlay" aria-haspopup="dialog" aria-expanded="false">credits</button>
-  <span>v2.1</span>
+  <span>v2.2</span>
 </div>
 
 <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
@@ -1346,7 +1421,6 @@
 <audio id="flip-sound" src="sounds/flip.mp3" preload="auto"></audio>
 
 <script>
-/* ---------- popups ---------- */
 let activeOverlay = null;
 let activeOpener = null;
 
@@ -1384,7 +1458,6 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
 
-/* ---------- night mode (click my icon) ---------- */
 const avatarBtn = document.getElementById('avatar-btn');
 const avatarImg = document.getElementById('avatar');
 const pickerEl = document.getElementById('emoji-picker');
@@ -1394,12 +1467,10 @@ avatarBtn.addEventListener('click', () => {
   else document.documentElement.removeAttribute('data-theme');
   avatarImg.src = goNight ? avatarImg.dataset.night : avatarImg.dataset.day;
   avatarBtn.setAttribute('aria-pressed', String(goNight));
-  /* emoji picker's own light/dark switch */
   pickerEl.classList.toggle('dark', goNight);
   pickerEl.classList.toggle('light', !goNight);
 });
 
-/* ---------- faq ---------- */
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.closest('.faq-item');
@@ -1423,7 +1494,6 @@ document.querySelectorAll('.faq-q a').forEach(link => {
   link.addEventListener('click', (e) => e.stopPropagation());
 });
 
-/* ---------- parallax background ---------- */
 let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
 const PARALLAX_MAX = 16;
 let isParallaxAnimating = false;
@@ -1454,21 +1524,28 @@ function parallaxLoop() {
   if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
     requestAnimationFrame(parallaxLoop);
   } else {
-    isParallaxAnimating = false; // Sleep loop when idle
+    isParallaxAnimating = false;
   }
 }
 
-/* ---------- send a note (Web3Forms) ---------- */
 const WEB3FORMS_ACCESS_KEY = "1a4b9717-8771-4729-b69e-6644da7e0f42";
 const sendBtn = document.getElementById('send-note-btn');
 const statusEl = document.getElementById('send-status');
 const noteTextarea = document.getElementById('note-textarea');
+const captchaWrap = document.querySelector('.captcha-wrap');
 sendBtn.addEventListener('click', async () => {
   statusEl.classList.remove('error');
   const note = noteTextarea.value.trim();
   if (!note) {
     statusEl.textContent = "write something first!";
     statusEl.classList.add('error');
+    return;
+  }
+  const captchaBox = document.querySelector('#note-modal-overlay textarea[name="h-captcha-response"]');
+  const captchaToken = captchaBox ? captchaBox.value : '';
+  if (!captchaToken) {
+    captchaWrap.classList.add('show');
+    statusEl.textContent = "almost there! tick the box, then try again.";
     return;
   }
   sendBtn.disabled = true;
@@ -1480,26 +1557,28 @@ sendBtn.addEventListener('click', async () => {
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
         subject: "someone left a note on frizzlelamb.github.io!",
-        message: note
+        message: note,
+        "h-captcha-response": captchaToken
       })
     });
     const result = await res.json();
     if (result.success) {
       statusEl.textContent = "sent! thank you, and have a good day.";
       noteTextarea.value = '';
+      captchaWrap.classList.remove('show');
     } else {
       statusEl.textContent = "hmm, something went wrong. try again?";
       statusEl.classList.add('error');
     }
   } catch (err) {
-    statusEl.textContent = "hmm, something went wrong. try again?";
+    statusEl.textContent = "beep boop? try again.";
     statusEl.classList.add('error');
   } finally {
     sendBtn.disabled = false;
+    try { if (window.hcaptcha) window.hcaptcha.reset(); } catch (e) {}
   }
 });
 
-/* ---------- sounds ---------- */
 const clickSound = document.getElementById('click-sound');
 const closeSound = document.getElementById('close-sound');
 const secretSound = document.getElementById('secret-sound');
@@ -1514,18 +1593,16 @@ flipSound.volume = 0.35;
 function playSound(audioEl) {
   const clone = audioEl.cloneNode();
   clone.volume = audioEl.volume;
-  clone.play().catch(() => {}); // ignore if browser blocks it
+  clone.play().catch(() => {});
 }
 
 const interactiveEls = document.querySelectorAll(
-  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a, .credits-link, #avatar-btn, #gallery-view-toggle'
+  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a, .credits-link, .archive-link, #avatar-btn, #gallery-view-toggle'
 );
 interactiveEls.forEach(el => {
-  /* my icon gets its own switch sound instead of the normal click */
   el.addEventListener('click', () => playSound(el === avatarBtn ? switchSound : clickSound));
 });
 
-/* ---------- the secret donut maker ---------- */
 const secretTrigger = document.getElementById('secret-trigger');
 const secretCompartment = document.getElementById('secret-compartment');
 const donutMount = document.getElementById('donut-mount');
@@ -1548,7 +1625,7 @@ secretTrigger.addEventListener('click', async () => {
     try {
       const [html] = await Promise.all([
         fetch('donut-panel.html').then(res => res.text()),
-        new Promise(resolve => setTimeout(resolve, 300)) // time
+        new Promise(resolve => setTimeout(resolve, 300))
       ]);
 
       const script = document.createElement('script');
@@ -1574,7 +1651,6 @@ secretTrigger.addEventListener('click', async () => {
   }
 });
 
-/* ---------- art samples gallery ---------- */
 let ART_SAMPLES = [];
 let galleryIndex = 0;
 const galleryStageImg = document.getElementById('gallery-stage-img');
@@ -1618,9 +1694,12 @@ function goToGalleryPiece(i) {
   }
 }
 
+const galleryOverviewNote = document.getElementById('gallery-overview-note');
+
 function setGalleryOverview(showOverview) {
   galleryBrowse.hidden = showOverview;
   galleryGrid.hidden = !showOverview;
+  galleryOverviewNote.hidden = !showOverview;
   galleryViewIconUse.setAttribute('href', showOverview ? '#icon-back-arrow' : '#icon-sun');
   galleryViewToggle.setAttribute('aria-label', showOverview ? 'back to browsing' : 'overview');
   galleryViewToggle.setAttribute('aria-pressed', String(showOverview));
@@ -1668,10 +1747,9 @@ document.getElementById('gallery-next').addEventListener('click', () => {
 });
 galleryViewToggle.addEventListener('click', () => setGalleryOverview(galleryGrid.hidden));
 
-applyGalleryStage(); // shows "loading artworks..." until Firebase responds
+applyGalleryStage();
 </script>
 
-<!-- ---------- emoji wall (Firebase) ---------- -->
 <script type="module">
 const firebaseConfig = {
   authDomain: "frizzlelamb-s-website.firebaseapp.com",
@@ -1683,7 +1761,6 @@ const firebaseConfig = {
   measurementId: "G-69MYV8V2C2"
 };
 
-/* full emoji picker */
 import("https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js")
   .catch(err => console.error("Emoji picker failed to load:", err));
 customElements.whenDefined('emoji-picker').then(() => {
@@ -1720,9 +1797,9 @@ function isSingleEmoji(s) {
 }
 
 const MAX_SHOWN = 60;
-const TRAY_HIDE_DELAY_MS = 2000;              // how long the tray lingers before fading away
-const CLOSE_DURATION_S = 0.5;                 // how long each emoji takes to fade away when the pin is clicked again
-const CLOSE_STAGGER_S = 0.3;                  // emojis start fading at random moments within this window (0 = all at once)
+const TRAY_HIDE_DELAY_MS = 2000;
+const CLOSE_DURATION_S = 0.5;
+const CLOSE_STAGGER_S = 0.3;
 const LAST_SENT_KEY = 'frizzlelamb-last-emoji-day';
 const HINT = "leave an emoji on the page!";
 
@@ -1737,7 +1814,6 @@ const quickRow = document.getElementById('quick-emojis');
 const moreToggle = document.getElementById('more-toggle');
 const moreWrap = document.getElementById('more-wrap');
 
-/* twemoji on every device */
 function parseEmoji(node) {
   if (window.twemoji) twemoji.parse(node, { folder: 'svg', ext: '.svg', className: 'twemoji' });
 }
@@ -1747,14 +1823,13 @@ layer.style.setProperty('--out-dur', `${CLOSE_DURATION_S}s`);
 let fb = null;
 let emojisRef = null;
 let settled = false;
-let sending = false;    // stops double-clicks
+let sending = false;
 let statusTimer = null;
 let trayTimer = null;
 let closeTimer = null;
 
 boardStatus.textContent = HINT;
 
-/* ----- status line ----- */
 function setStatus(msg, revert = true) {
   boardStatus.textContent = msg;
   clearTimeout(statusTimer);
@@ -1780,7 +1855,6 @@ function saveLastSentDay(day) {
   } catch (e) {}
 }
 
-// how many ms until they're allowed to send again
 function msUntilNextEmoji() {
   if (lastSentDay !== todayString()) return 0;
   const now = new Date();
@@ -1797,9 +1871,6 @@ function formatWait(ms) {
   return `${minutes}m`;
 }
 
-/* ----- tray helpers ----- */
-
-// dims + locks the emojis
 function setPickerEnabled(enabled) {
   picker.classList.toggle('locked', !enabled);
   picker.toggleAttribute('inert', !enabled);
@@ -1837,7 +1908,6 @@ function openTray() {
   }
 }
 
-/* 1) show / hide the wall */
 function showBoard() {
   clearTimeout(closeTimer);
   layer.classList.remove('closing');
@@ -1856,7 +1926,6 @@ function hideBoard() {
   });
   layer.classList.add('closing');
 
-  // once the last emoji has finished fading
   clearTimeout(closeTimer);
   closeTimer = setTimeout(() => {
     layer.classList.remove('revealed', 'closing');
@@ -1880,7 +1949,6 @@ moreToggle.addEventListener('click', () => {
   playSound(clickSound);
 });
 
-/* 2) */
 picker.addEventListener('emoji-click', (e) => sendEmoji(e.detail.unicode));
 
 QUICK_EMOJIS.forEach(emoji => {
@@ -1894,7 +1962,6 @@ QUICK_EMOJIS.forEach(emoji => {
   quickRow.appendChild(btn);
 });
 
-/* 3) */
 function seededRandom(str) {
   let h = 1779033703 ^ str.length;
   for (let i = 0; i < str.length; i++) {
@@ -1911,7 +1978,6 @@ function seededRandom(str) {
   };
 }
 
-/* desktop: emojis stay off the middle. phones can overlap */
 const MOBILE_QUERY = window.matchMedia('(max-width: 700px)');
 const EMOJI_PAD = 16;
 const EDGE = 8;
@@ -2006,7 +2072,6 @@ function addScatterEmoji(key, emoji) {
   }
 }
 
-/* 4) */
 async function sendEmoji(emoji) {
   if (sending) return;
   if (!isSingleEmoji(emoji)) return;
@@ -2029,7 +2094,7 @@ async function sendEmoji(emoji) {
 
   try {
     await fb.push(emojisRef, { e: emoji, t: fb.serverTimestamp() });
-    setUsedMode(true);          // emojis stay visible, just dimmed and locked
+    setUsedMode(true);
     setStatus("sent!", false);
     scheduleTrayHide(TRAY_HIDE_DELAY_MS);
   } catch (err) {
@@ -2042,7 +2107,6 @@ async function sendEmoji(emoji) {
   }
 }
 
-/* 5) */
 let firebaseDb = null;
 async function initFirebase() {
   if (firebaseDb) return firebaseDb;
@@ -2096,5 +2160,6 @@ async function loadGallery() {
 connect();
 loadGallery();
 </script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
 </html>
