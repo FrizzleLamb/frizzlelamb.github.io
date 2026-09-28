@@ -1335,8 +1335,8 @@
   <div class="donut-modal note-modal" role="dialog" aria-modal="true" aria-label="send me a note">
     <button class="modal-close" aria-label="close">✕</button>
     <div class="send-section">
-      <span class="label">send me a note! i won't be able to reply, but i read every single one :)</span>
-      <textarea id="note-textarea" placeholder="tell me something..."></textarea>
+      <span class="label">send me a note! i won't be able to reply directly, but i read every single one :)</span>
+      <textarea id="note-textarea" placeholder="ask or tell me something..."></textarea>
       <div class="captcha-wrap">
         <div class="h-captcha" data-captcha="true"></div>
       </div>
@@ -1545,7 +1545,7 @@ sendBtn.addEventListener('click', async () => {
   const captchaToken = captchaBox ? captchaBox.value : '';
   if (!captchaToken) {
     captchaWrap.classList.add('show');
-    statusEl.textContent = "almost there! tick the box, then try again.";
+    statusEl.textContent = "HOLD IT! complete the challenge first, then send the note.";
     return;
   }
   sendBtn.disabled = true;
@@ -1620,7 +1620,7 @@ secretTrigger.addEventListener('click', async () => {
 
   if (!donutLoaded) {
     donutLoaded = true;
-    donutMount.innerHTML = '<div class="donut-loading">mixing the dough...</div>';
+    donutMount.innerHTML = '<div class="donut-loading">frying the dough...</div>';
 
     try {
       const [html] = await Promise.all([
