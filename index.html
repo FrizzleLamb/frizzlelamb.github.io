@@ -347,17 +347,6 @@
   .archive-modal {
     max-width: 360px;
   }
-  .gallery-modal {
-    max-width: 780px;
-  }
-  .gallery-modal .modal-title {
-    margin-bottom: 32px;
-  }
-  .gallery-thumb, .gallery-stage-img {
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-  }
   .modal-close {
     position: absolute;
     top: 10px;
@@ -369,29 +358,6 @@
     color: var(--ink);
     cursor: pointer;
     padding: 4px;
-  }
-  .gallery-corner-btn {
-    position: absolute;
-    top: 10px;
-    left: 12px;
-    background: none;
-    border: none;
-    padding: 4px;
-    color: var(--ink);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .gallery-corner-icon {
-    width: 20px;
-    height: 20px;
-    display: block;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
   }
   .modal-title {
     text-align: center;
@@ -405,15 +371,6 @@
     justify-content: center;
     gap: 24px;
     flex-wrap: wrap;
-  }
-  .gallery-overview-note {
-    margin: 4px 6px 0;
-    text-align: center;
-    font-size: 12px;
-    color: var(--ink-soft);
-  }
-  .gallery-overview-note[hidden] {
-    display: none;
   }
 
   .faq-list {
@@ -646,6 +603,13 @@
     text-underline-offset: 3px;
   }
 
+  .about-text {
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
   .credits-list {
     list-style: none;
     margin: 0;
@@ -677,170 +641,6 @@
     font-size: 12px;
     color: var(--ink-soft);
   }
-
-  .gallery-browse[hidden],
-  .gallery-grid[hidden] {
-    display: none;
-  }
-  @keyframes gallery-fade-in {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .gallery-browse:not([hidden]),
-  .gallery-grid:not([hidden]) {
-    animation: gallery-fade-in 0.22s ease;
-  }
-  .gallery-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    padding: 0 6px 6px;
-  }
-  .gallery-item {
-    position: relative;
-    width: 130px;
-    aspect-ratio: 1 / 1;
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-  }
-  .gallery-thumb {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-color: var(--paper-shade);
-    border: 2px solid var(--ink);
-    border-radius: var(--wobble-sm-a);
-    transition: transform 0.15s ease;
-  }
-  .gallery-item:nth-child(even) .gallery-thumb {
-    border-radius: var(--wobble-sm-b);
-  }
-  .gallery-item:hover .gallery-thumb {
-    transform: translateY(-3px);
-  }
-  .gallery-caption {
-    position: absolute;
-    left: 50%;
-    bottom: 10px;
-    transform: translate(-50%, 6px);
-    max-width: calc(100% - 12px);
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 12px;
-    font-weight: bold;
-    padding: 3px 10px;
-    border-radius: var(--wobble-sm-b);
-    opacity: 0;
-    pointer-events: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: opacity 0.15s ease, transform 0.15s ease;
-  }
-  .gallery-item:hover .gallery-caption {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-  .gallery-carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 53px;
-    gap: 15px;
-    margin-bottom: 25px;
-  }
-  .gallery-stage {
-    position: relative;
-    flex-shrink: 1;
-    max-width: 100%;
-  }
-  .gallery-stage::before,
-  .gallery-stage::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--paper);
-    border: 2px solid var(--ink);
-    border-radius: var(--wobble-sm-a);
-  }
-  .gallery-stage::before {
-    transform: rotate(-6deg) translate(-5px, 4px);
-    z-index: 1;
-  }
-  .gallery-stage::after {
-    transform: rotate(5deg) translate(5px, -3px);
-    z-index: 2;
-  }
-  .gallery-stage-img {
-    position: relative;
-    z-index: 3;
-    display: block;
-    max-width: 100%;
-    max-height: 68vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    background-color: var(--paper-shade);
-    border: 2.5px solid var(--ink);
-    border-radius: var(--wobble-a);
-    transition: opacity 0.22s ease;
-  }
-  .gallery-stage-img.is-switching {
-    opacity: 0;
-  }
-  .gallery-stage-caption {
-    position: absolute;
-    z-index: 4;
-    left: 50%;
-    bottom: 12px;
-    transform: translate(-50%, 6px);
-    max-width: calc(100% - 20px);
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 13px;
-    font-weight: bold;
-    padding: 4px 12px;
-    border-radius: var(--wobble-sm-b);
-    opacity: 0;
-    pointer-events: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: opacity 0.15s ease, transform 0.15s ease;
-  }
-  .gallery-stage:hover .gallery-stage-caption {
-    opacity: 0.8;
-    transform: translate(-50%, 0);
-  }
-  .gallery-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    flex-shrink: 0;
-    width: 38px;
-    height: 38px;
-    border: 2px solid var(--ink-light);
-    border-radius: 50%;
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    transition: transform 0.15s, background-color 0.15s;
-  }
-  .gallery-nav:hover {
-    background-image: var(--hatch);
-    transform: scale(1.08);
-    transform: translateY(-50%) scale(1.08);
-  }
-#gallery-prev { left: 0; }
-#gallery-next { right: 0; }
 
   .emoji-layer {
     position: fixed;
@@ -1157,21 +957,6 @@
     <path d="M5 14.5C5 12 6.8 10.6 9 10.6L18.5 10.5L22 15.2L39 15.3C41.3 15.3 43 17 42.8 19.4L41.2 36.5C41 38.8 39 40.4 36.7 40.2L9.3 39.8C7 39.7 5.2 37.8 5.2 35.5Z"/>
     <path d="M5.2 19.5C13 19 33 19.2 42.5 19.6"/>
   </symbol>
-  <symbol id="icon-sun" viewBox="0 0 48 48">
-    <circle cx="12" cy="12" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="24" cy="12" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="36" cy="12" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="12" cy="24" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="24" cy="24" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="36" cy="24" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="12" cy="36" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="24" cy="36" r="4.6" fill="currentColor" stroke="none"/>
-    <circle cx="36" cy="36" r="4.6" fill="currentColor" stroke="none"/>
-  </symbol>
-  <symbol id="icon-back-arrow" viewBox="0 0 48 48">
-    <path d="M28 12L14 24L28 36" stroke-width="4.8"/>
-    <path d="M14 24H40" stroke-width="4.8"/>
-  </symbol>
 
   <filter id="emoji-outline" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
     <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="thick"/>
@@ -1215,7 +1000,7 @@
   <button class="donut-toggle" data-open="faq-modal-overlay" aria-label="frequently asked questions" aria-haspopup="dialog" aria-expanded="false">
     <svg class="icon" aria-hidden="true"><use href="#icon-faq"/></svg>
   </button>
-  <button class="donut-toggle" data-open="gallery-modal-overlay" aria-label="see selected frizzlelamb artworks" aria-haspopup="dialog" aria-expanded="false">
+  <button class="donut-toggle" data-open="about-modal-overlay" aria-label="about me" aria-haspopup="dialog" aria-expanded="false">
     <svg class="icon" aria-hidden="true"><use href="#icon-folder"/></svg>
   </button>
   <button class="donut-toggle" data-open="note-modal-overlay" aria-label="send me a note" aria-haspopup="dialog" aria-expanded="false">
@@ -1234,7 +1019,7 @@
       <a href="https://www.pixiv.net/en/users/65300551" target="_blank" rel="noopener noreferrer">pixiv</a>
       <a href="https://bsky.app/profile/frizzlelamb.bsky.social" target="_blank" rel="noopener noreferrer">bluesky</a>
     </div>
-    <p class="archive-note">as of oct 2026, i've decided to strictly post in just twitter (and archive old art in tumblr), but you can still browse here!</p>
+    <p class="archive-note">as of oct 2026, i've decided to strictly post in just twitter and archive old art in tumblr, but you can still browse in these!</p>
   </div>
 </div>
 
@@ -1346,27 +1131,11 @@
   </div>
 </div>
 
-<div id="gallery-modal-overlay" class="modal-overlay">
-  <div class="donut-modal gallery-modal" role="dialog" aria-modal="true" aria-label="art samples">
-    <button id="gallery-view-toggle" class="gallery-corner-btn" type="button" aria-label="overview" aria-pressed="false">
-      <svg class="gallery-corner-icon" aria-hidden="true"><use id="gallery-view-icon-use" href="#icon-sun"/></svg>
-    </button>
+<div id="about-modal-overlay" class="modal-overlay">
+  <div class="donut-modal note-modal" role="dialog" aria-modal="true" aria-label="about me">
     <button class="modal-close" aria-label="close">✕</button>
-    <p class="modal-title">selected artworks</p>
-
-    <div id="gallery-browse" class="gallery-browse">
-      <div class="gallery-carousel">
-        <button id="gallery-prev" class="gallery-nav" type="button" aria-label="previous piece">‹</button>
-        <div class="gallery-stage">
-          <img id="gallery-stage-img" class="gallery-stage-img" src="" alt="" draggable="false" oncontextmenu="return false;">
-          <span id="gallery-stage-caption" class="gallery-stage-caption"></span>
-        </div>
-        <button id="gallery-next" class="gallery-nav" type="button" aria-label="next piece">›</button>
-      </div>
-    </div>
-
-    <div id="gallery-grid" class="gallery-grid" hidden></div>
-    <p id="gallery-overview-note" class="gallery-overview-note" hidden>to see more of my past artworks, visit the links on the main page!</p>
+    <p class="modal-title">oops, nothing to see here...</p>
+    <p class="about-text">the code for this feature broke so it's temporarily empty. sorry!</p>
   </div>
 </div>
 
@@ -1385,7 +1154,7 @@
       </li>
       <li>
         <span class="credit-role">sounds</span>
-        <span class="credit-what">Minimal UI pack – pops clicks ticks.wav by <a href="https://freesound.org/s/538236/" target="_blank" rel="noopener noreferrer">DesignDean</a><br/>Whoop by <a href="https://freesound.org/s/825578/" target="_blank" rel="noopener noreferrer">akelley6</a><br/>Light Switch Turn Off Sounds by <a href="https://freesound.org/people/ChrisTutorials/sounds/440499/">ChrisTutorials</a><br/>Flipping Page Back by <a href="https://freesound.org/people/Ym_The_Cosmic/sounds/858467/">Ym_The_Cosmic</a></span>
+        <span class="credit-what">Minimal UI pack – pops clicks ticks.wav by <a href="https://freesound.org/s/538236/" target="_blank" rel="noopener noreferrer">DesignDean</a><br/>Whoop by <a href="https://freesound.org/s/825578/" target="_blank" rel="noopener noreferrer">akelley6</a><br/>Light Switch Turn Off Sounds by <a href="https://freesound.org/people/ChrisTutorials/sounds/440499/">ChrisTutorials</a></span>
       </li>
     </ul>
     <p class="credits-note">thank you to everyone who makes their work free to use!</p>
@@ -1411,14 +1180,13 @@
 
 <div id="version-tag">
   <button class="credits-link" type="button" data-open="credits-modal-overlay" aria-haspopup="dialog" aria-expanded="false">credits</button>
-  <span>v2.2</span>
+  <span>v2.2.0</span>
 </div>
 
 <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
 <audio id="close-sound" src="sounds/close.mp3" preload="auto"></audio>
 <audio id="secret-sound" src="sounds/secret.mp3" preload="auto"></audio>
 <audio id="switch-sound" src="sounds/switch.mp3" preload="auto"></audio>
-<audio id="flip-sound" src="sounds/flip.mp3" preload="auto"></audio>
 
 <script>
 let activeOverlay = null;
@@ -1442,7 +1210,6 @@ function closeModal() {
 document.querySelectorAll('[data-open]').forEach(btn => {
   btn.addEventListener('click', () => {
     const overlay = document.getElementById(btn.dataset.open);
-    if (overlay.id === 'gallery-modal-overlay') setGalleryOverview(false);
     openModal(overlay, btn);
   });
 });
@@ -1583,12 +1350,10 @@ const clickSound = document.getElementById('click-sound');
 const closeSound = document.getElementById('close-sound');
 const secretSound = document.getElementById('secret-sound');
 const switchSound = document.getElementById('switch-sound');
-const flipSound = document.getElementById('flip-sound');
 clickSound.volume = 0.5;
 closeSound.volume = 0.5;
 secretSound.volume = 0.4;
 switchSound.volume = 0.35;
-flipSound.volume = 0.35;
 
 function playSound(audioEl) {
   const clone = audioEl.cloneNode();
@@ -1597,7 +1362,7 @@ function playSound(audioEl) {
 }
 
 const interactiveEls = document.querySelectorAll(
-  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a, .credits-link, .archive-link, #avatar-btn, #gallery-view-toggle'
+  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a, .credits-link, .archive-link, #avatar-btn'
 );
 interactiveEls.forEach(el => {
   el.addEventListener('click', () => playSound(el === avatarBtn ? switchSound : clickSound));
@@ -1650,104 +1415,6 @@ secretTrigger.addEventListener('click', async () => {
     }
   }
 });
-
-let ART_SAMPLES = [];
-let galleryIndex = 0;
-const galleryStageImg = document.getElementById('gallery-stage-img');
-const galleryStageCaption = document.getElementById('gallery-stage-caption');
-const galleryGrid = document.getElementById('gallery-grid');
-const galleryBrowse = document.getElementById('gallery-browse');
-const galleryViewToggle = document.getElementById('gallery-view-toggle');
-const galleryViewIconUse = document.getElementById('gallery-view-icon-use');
-
-function applyGalleryStage() {
-  if (!ART_SAMPLES.length) {
-    galleryStageImg.removeAttribute('src');
-    galleryStageImg.alt = '';
-    galleryStageCaption.textContent = 'loading artworks...';
-    return;
-  }
-  const item = ART_SAMPLES[galleryIndex];
-  galleryStageImg.src = item.src;
-  galleryStageImg.alt = item.caption || '';
-  galleryStageCaption.textContent = item.caption || '';
-}
-
-function goToGalleryPiece(i) {
-  if (!ART_SAMPLES.length) return;
-  const nextIndex = (i + ART_SAMPLES.length) % ART_SAMPLES.length;
-  const nextItem = ART_SAMPLES[nextIndex];
-
-  const preloader = new Image();
-  preloader.onload = swap;
-  preloader.onerror = swap;
-  preloader.src = nextItem.src;
-
-  function swap() {
-    galleryStageImg.classList.add('is-switching');
-    setTimeout(() => {
-      galleryIndex = nextIndex;
-      applyGalleryStage();
-      void galleryStageImg.offsetWidth;
-      galleryStageImg.classList.remove('is-switching');
-    }, 220);
-  }
-}
-
-const galleryOverviewNote = document.getElementById('gallery-overview-note');
-
-function setGalleryOverview(showOverview) {
-  galleryBrowse.hidden = showOverview;
-  galleryGrid.hidden = !showOverview;
-  galleryOverviewNote.hidden = !showOverview;
-  galleryViewIconUse.setAttribute('href', showOverview ? '#icon-back-arrow' : '#icon-sun');
-  galleryViewToggle.setAttribute('aria-label', showOverview ? 'back to browsing' : 'overview');
-  galleryViewToggle.setAttribute('aria-pressed', String(showOverview));
-}
-
-function renderGalleryGrid() {
-  galleryGrid.innerHTML = '';
-  ART_SAMPLES.forEach((item, i) => {
-    const thumbBtn = document.createElement('button');
-    thumbBtn.type = 'button';
-    thumbBtn.className = 'gallery-item';
-    const thumbImg = document.createElement('img');
-    thumbImg.className = 'gallery-thumb';
-    thumbImg.src = item.src;
-    thumbImg.alt = item.caption || '';
-    thumbImg.loading = 'lazy';
-    thumbImg.oncontextmenu = () => false;
-    thumbImg.draggable = false;
-    const thumbCaption = document.createElement('span');
-    thumbCaption.className = 'gallery-caption';
-    thumbCaption.textContent = item.caption || '';
-    thumbBtn.append(thumbImg, thumbCaption);
-    thumbBtn.addEventListener('click', () => {
-      goToGalleryPiece(i);
-      setGalleryOverview(false);
-    });
-    galleryGrid.appendChild(thumbBtn);
-  });
-}
-
-window.setGalleryData = function (list) {
-  ART_SAMPLES = Array.isArray(list) ? list : [];
-  galleryIndex = 0;
-  renderGalleryGrid();
-  applyGalleryStage();
-};
-
-document.getElementById('gallery-prev').addEventListener('click', () => {
-  playSound(flipSound);
-  goToGalleryPiece(galleryIndex - 1);
-});
-document.getElementById('gallery-next').addEventListener('click', () => {
-  playSound(flipSound);
-  goToGalleryPiece(galleryIndex + 1);
-});
-galleryViewToggle.addEventListener('click', () => setGalleryOverview(galleryGrid.hidden));
-
-applyGalleryStage();
 </script>
 
 <script type="module">
@@ -2144,21 +1811,7 @@ async function connect() {
   }
 }
 
-async function loadGallery() {
-  try {
-    const db = await initFirebase();
-    const snap = await fb.get(fb.ref(db, 'gallery'));
-    const raw = snap.val();
-    const list = raw ? Object.values(raw).filter(Boolean) : [];
-    window.setGalleryData(list);
-  } catch (err) {
-    console.error('Gallery failed to load:', err);
-    window.setGalleryData([]);
-  }
-}
-
 connect();
-loadGallery();
 </script>
 <script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
