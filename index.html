@@ -934,6 +934,80 @@
       color: var(--ink-soft);
       opacity: 0.8;
     }
+
+.public-check {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.public-check input {
+  appearance: none;
+  flex: none;
+  display: grid;
+  place-content: center;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  border: 2px solid var(--ink-light);
+  border-radius: var(--wobble-sm-a);
+  background: var(--paper);
+  cursor: pointer;
+}
+.public-check input::after {
+  content: "✓";
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+  color: var(--ink);
+  transform: scale(0);
+  transition: transform 0.12s;
+}
+.public-check input:checked { border-color: var(--ink); }
+.public-check input:checked::after { transform: scale(1); }
+
+.board-modal { max-width: 520px; }
+.board-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.board-item {
+  border: 2px solid var(--ink-light);
+  border-radius: 10px 5px 11px 6px / 6px 11px 5px 10px;
+  padding: 12px 14px;
+}
+.board-item:nth-child(even) {
+  border-radius: 5px 11px 6px 10px / 11px 6px 10px 5px;
+}
+.board-q,
+.board-a {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.board-q { color: var(--ink-soft); }
+.board-a {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px dashed var(--ink-light);
+}
+.board-who {
+  font-weight: bold;
+  margin-right: 4px;
+}
+.board-empty {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
 </style>
 </head>
 <body>
@@ -1112,13 +1186,28 @@
   <div class="donut-modal note-modal" role="dialog" aria-modal="true" aria-label="send me a note">
     <button class="modal-close" aria-label="close">✕</button>
     <div class="send-section">
-      <span class="label">send me a note! i won't be able to reply directly, but i read every single one :)</span>
-      <textarea id="note-textarea" placeholder="ask or tell me something..."></textarea>
+      <span class="label">send me a note! i sometimes won't be able to reply directly, but i read every single one :)</span>
+      <textarea id="note-textarea" placeholder="ask or tell me something..."></textarea> 
+      <label class="public-check">
+        <input type="checkbox" id="note-public">
+        <span>post publicly? (anonymous)</span>
+      </label>
       <div class="captcha-wrap">
         <div class="h-captcha" data-captcha="true"></div>
       </div>
       <button id="send-note-btn">do it</button>
       <div id="send-status"></div>
+      <button type="button" class="archive-link" id="open-board-btn">see answered notes</button>
+    </div>
+  </div>
+</div>
+
+<div id="board-modal-overlay" class="modal-overlay">
+  <div class="donut-modal board-modal" role="dialog" aria-modal="true" aria-label="answered notes">
+    <button class="modal-close" aria-label="close">✕</button>
+    <p class="modal-title">answered notes</p>
+    <div id="board-list" class="board-list">
+      <p class="board-empty">loading...</p>
     </div>
   </div>
 </div>
@@ -1164,7 +1253,7 @@
 
 <div id="version-tag">
   <button class="credits-link" type="button" data-open="credits-modal-overlay" aria-haspopup="dialog" aria-expanded="false">credits</button>
-  <span>v2.2.1</span>
+  <span>v2.3</span>
 </div>
 
 <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
@@ -1196,6 +1285,10 @@ document.querySelectorAll('[data-open]').forEach(btn => {
     const overlay = document.getElementById(btn.dataset.open);
     openModal(overlay, btn);
   });
+});
+document.getElementById('open-board-btn').addEventListener('click', (e) => {
+  closeModal();
+  openModal(document.getElementById('board-modal-overlay'), e.currentTarget);
 });
 document.querySelectorAll('.modal-close').forEach(btn => {
   btn.addEventListener('click', closeModal);
@@ -1275,7 +1368,7 @@ function parallaxLoop() {
   if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
     requestAnimationFrame(parallaxLoop);
   } else {
-    isParallaxAnimating = false;
+    isParallaxAnimating = false; 
   }
 }
 
@@ -1307,8 +1400,9 @@ sendBtn.addEventListener('click', async () => {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
-        subject: "someone left a note on frizzlelamb.github.io!",
+        subject: (publicBox.checked ? "[PUBLIC OK] " : "") + "someone left a note on frizzlelamb.github.io!",
         message: note,
+        post_publicly: publicBox.checked ? "YES" : "no",
         "h-captcha-response": captchaToken
       })
     });
@@ -1317,6 +1411,7 @@ sendBtn.addEventListener('click', async () => {
       statusEl.textContent = "sent! thank you, and have a good day.";
       noteTextarea.value = '';
       captchaWrap.classList.remove('show');
+      publicBox.checked = false;
     } else {
       statusEl.textContent = "hmm, something went wrong. try again?";
       statusEl.classList.add('error');
@@ -1448,9 +1543,9 @@ function isSingleEmoji(s) {
 }
 
 const MAX_SHOWN = 60;
-const TRAY_HIDE_DELAY_MS = 2000;
-const CLOSE_DURATION_S = 0.5;
-const CLOSE_STAGGER_S = 0.3;
+const TRAY_HIDE_DELAY_MS = 2000;              
+const CLOSE_DURATION_S = 0.5;                 
+const CLOSE_STAGGER_S = 0.3;                  
 const LAST_SENT_KEY = 'frizzlelamb-last-emoji-day';
 const HINT = "leave an emoji on the page!";
 
@@ -1464,6 +1559,7 @@ const QUICK_EMOJIS = ['🦀','🥴','🦐','🧀','🍰'];
 const quickRow = document.getElementById('quick-emojis');
 const moreToggle = document.getElementById('more-toggle');
 const moreWrap = document.getElementById('more-wrap');
+const publicBox = document.getElementById('note-public');
 
 function parseEmoji(node) {
   if (window.twemoji) twemoji.parse(node, { folder: 'svg', ext: '.svg', className: 'twemoji' });
@@ -1474,7 +1570,7 @@ layer.style.setProperty('--out-dur', `${CLOSE_DURATION_S}s`);
 let fb = null;
 let emojisRef = null;
 let settled = false;
-let sending = false;
+let sending = false;    
 let statusTimer = null;
 let trayTimer = null;
 let closeTimer = null;
@@ -1521,7 +1617,6 @@ function formatWait(ms) {
   if (hours) return `${hours}h`;
   return `${minutes}m`;
 }
-
 
 function setPickerEnabled(enabled) {
   picker.classList.toggle('locked', !enabled);
@@ -1746,7 +1841,7 @@ async function sendEmoji(emoji) {
 
   try {
     await fb.push(emojisRef, { e: emoji, t: fb.serverTimestamp() });
-    setUsedMode(true);
+    setUsedMode(true);          
     setStatus("sent!", false);
     scheduleTrayHide(TRAY_HIDE_DELAY_MS);
   } catch (err) {
@@ -1773,6 +1868,48 @@ async function connect() {
   try {
     const db = await initFirebase();
     emojisRef = fb.ref(db, 'emojis');
+
+const boardList = document.getElementById('board-list');
+fb.onValue(fb.ref(db, 'board'), (snap) => {
+  const items = [];
+  snap.forEach((child) => {
+    const d = child.val();
+    if (d && typeof d.q === 'string' && typeof d.a === 'string') {
+      items.push({ key: child.key, t: Number(d.t) || 0, q: d.q, a: d.a });
+    }
+  });
+  items.sort((x, y) => (y.t - x.t) || (y.key > x.key ? 1 : -1));
+
+  boardList.textContent = '';
+  if (!items.length) {
+    const p = document.createElement('p');
+    p.className = 'board-empty';
+    p.textContent = "nothing here yet, check back soon!";
+    boardList.appendChild(p);
+    return;
+  }
+  items.forEach((it) => {
+    const card = document.createElement('div');
+    card.className = 'board-item';
+    const q = document.createElement('p');
+    q.className = 'board-q';
+    const qWho = document.createElement('span');
+    qWho.className = 'board-who';
+    qWho.textContent = 'anon:';
+    q.append(qWho, it.q);
+    const a = document.createElement('p');
+    a.className = 'board-a';
+    const aWho = document.createElement('span');
+    aWho.className = 'board-who';
+    aWho.textContent = 'me:';
+    a.append(aWho, it.a);
+    card.append(q, a);
+    boardList.appendChild(card);
+  });
+}, (err) => {
+  console.error("Can't read the answered notes:", err);
+  boardList.textContent = "the board can't load right now, sorry!";
+});
 
     fb.onChildAdded(
       fb.query(emojisRef, fb.limitToLast(MAX_SHOWN)),
