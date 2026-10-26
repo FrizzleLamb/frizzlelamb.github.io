@@ -1377,6 +1377,8 @@ const sendBtn = document.getElementById('send-note-btn');
 const statusEl = document.getElementById('send-status');
 const noteTextarea = document.getElementById('note-textarea');
 const captchaWrap = document.querySelector('.captcha-wrap');
+const publicBox = document.getElementById('note-public');
+   
 sendBtn.addEventListener('click', async () => {
   statusEl.classList.remove('error');
   const note = noteTextarea.value.trim();
@@ -1559,7 +1561,6 @@ const QUICK_EMOJIS = ['🦀','🥴','🦐','🧀','🍰'];
 const quickRow = document.getElementById('quick-emojis');
 const moreToggle = document.getElementById('more-toggle');
 const moreWrap = document.getElementById('more-wrap');
-const publicBox = document.getElementById('note-public');
 
 function parseEmoji(node) {
   if (window.twemoji) twemoji.parse(node, { folder: 'svg', ext: '.svg', className: 'twemoji' });
