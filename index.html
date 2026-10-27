@@ -68,7 +68,8 @@
     --page-dots: #384245;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { height: 100%; }
+  html { height: 100%;}
+  html.notes-active {scrollbar-gutter: stable both-edges;}
   body {
     display: flex;
     flex-direction: column;
@@ -1294,7 +1295,7 @@ function playSound(audioEl) {
 }
 
 document.querySelectorAll(
-  '.donut-toggle, .faq-q, #send-note-btn, .link-row a, .credits-link, .archive-link, #avatar-btn, .scroll-cue'
+  '.donut-toggle, .faq-q, #send-note-btn, .link-row a, .credits-link, .archive-link, #avatar-btn'
 ).forEach(el => {
   el.addEventListener('click', () => playSound(el === avatarBtn ? switchSound : clickSound));
 });
@@ -1785,6 +1786,19 @@ function renderNotes(list, items) {
     aText.innerHTML = it.a;
     aP.append(aLabel, aText);
 
+    aText.querySelectorAll('a').forEach(link => {
+      let href = link.getAttribute('href');
+      if (href) {
+        href = href.replace(/["\\]/g, '');
+        if (!href.startsWith('http://') && !href.startsWith('https://')) {
+          href = 'https://' + href;
+        }
+        link.setAttribute('href', href);
+      }
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+
     card.append(qP, aP);
 
     if (it.key) {
@@ -1793,7 +1807,7 @@ function renderNotes(list, items) {
       const timestampNum = Number(it.key);
       if (!isNaN(timestampNum) && timestampNum > 0) {
         const d = new Date(timestampNum);
-        dateSpan.textContent = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        dateSpan.textContent = d.toLocaleString(undefined, {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
       }
       card.appendChild(dateSpan);
     }
@@ -1830,14 +1844,39 @@ async function loadNotes(list) {
 let notesOpened = false;
 document.querySelector('.scroll-cue').addEventListener('click', () => {
   const box = document.getElementById('notes-box');
-  if (!notesOpened) {
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (notesOpened) {
+    notesOpened = false;
+    playSound(closeSound);
+    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    box.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    box.style.opacity = '0';
+    box.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      box.className = '';
+      box.innerHTML = '';
+      box.style.transition = '';
+      box.style.opacity = '';
+      box.style.transform = '';
+      document.documentElement.classList.remove('notes-active');
+    }, 300);
+  } else {
     notesOpened = true;
+    document.documentElement.classList.add('notes-active');
+    playSound(secretSound);
+    box.style.opacity = '0';
+    box.style.transform = 'translateY(10px)';
     box.className = 'notes-section';
     box.innerHTML = '<div class="board-list"><p class="board-empty">loading...</p></div>';
     loadNotes(box.querySelector('.board-list'));
+    requestAnimationFrame(() => {
+      box.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      box.style.opacity = '1';
+      box.style.transform = 'translateY(0)';
+    });
+    requestAnimationFrame(() => box.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' }));
   }
-  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  requestAnimationFrame(() => box.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' }));
 });
 
 connect();
