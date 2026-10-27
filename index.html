@@ -32,7 +32,7 @@
     --paper: #eef4ef;
     --paper-shade: #dbe6dd;
     --paper-dots: #c9d7cd;
-    --link-hover: #33805f; 
+    --link-hover: #33805f;
     --overlay: rgba(20, 32, 25, 0.4);
 
     --page: var(--paper);
@@ -62,25 +62,19 @@
     --link-hover: #7fd4b6;
     --overlay: rgba(3, 12, 15, 0.55);
     --hatch-line: rgba(216, 239, 233, 0.16);
+
     --page: #1b2122;
     --page-shade: #293133;
     --page-dots: #384245;
   }
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
-  html, body {
-    height: 100%;
-  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { height: 100%; }
   body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
     margin: 0;
-    padding: 32px 16px 48px;
+    padding: 0 16px;
     background-image:
       radial-gradient(var(--page-dots) 15%, transparent 16%),
       radial-gradient(ellipse 120% 20% at bottom, var(--page-shade) 0%, transparent 100%);
@@ -88,14 +82,10 @@
     background-color: var(--page);
     background-attachment: fixed;
     transition: background-position 0.2s ease-out;
-    gap: 40px;
     font-family: var(--font-main);
     color: var(--ink);
   }
-  :focus-visible {
-    outline: 3px dashed var(--ink);
-    outline-offset: 4px;
-  }
+  :focus-visible { outline: 3px dashed var(--ink); outline-offset: 4px; }
 
   a {
     color: var(--ink);
@@ -104,13 +94,9 @@
     text-underline-offset: 2px;
     transition: color 0.15s;
   }
-  a:hover {
-    color: var(--link-hover);
-  }
+  a:hover { color: var(--link-hover); }
 
-  .header {
-    text-align: center;
-  }
+  .header { text-align: center; }
   .avatar-btn {
     display: block;
     margin: 0 auto 14px;
@@ -129,15 +115,10 @@
     border: 3px solid var(--ink);
     border-radius: 50% 47% 52% 48% / 48% 52% 47% 50%;
     box-shadow: var(--soft-shadow);
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
     user-select: none;
     pointer-events: none;
   }
-  .header h1 {
-    margin: 0;
-    font-size: 52px;
-  }
+  .header h1 { margin: 0; font-size: 52px; }
   .header p {
     margin: 10px auto 0;
     max-width: 560px;
@@ -157,11 +138,7 @@
     align-items: center;
     gap: 14px;
   }
-  .link-group span.label {
-    font-size: 19px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-  }
+  .link-group span.label { font-size: 19px; font-weight: bold; letter-spacing: 0.5px; }
   .link-row {
     display: flex;
     flex-wrap: wrap;
@@ -182,22 +159,14 @@
     box-shadow: var(--soft-shadow);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .link-row a:nth-child(even) {
-    border-radius: var(--wobble-b);
-  }
+  .link-row a:nth-child(even) { border-radius: var(--wobble-b); }
   .link-row a:hover {
     background-image: var(--hatch);
     transform: translateY(-2px) rotate(-1deg);
     box-shadow: 0 4px 8px rgba(20, 32, 25, 0.16);
   }
-  .link-row a:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(20, 32, 25, 0.12);
-  }
-  .link-group.commission .link-row a {
-    background-color: var(--ink);
-    color: var(--paper);
-  }
+  .link-row a:active { transform: translateY(0); box-shadow: 0 1px 3px rgba(20, 32, 25, 0.12); }
+  .link-group.commission .link-row a { background-color: var(--ink); color: var(--paper); }
 
   .archive-link {
     background: none;
@@ -211,9 +180,7 @@
     text-decoration: underline dotted;
     cursor: pointer;
   }
-  .archive-link:hover {
-    opacity: 1;
-  }
+  .archive-link:hover { opacity: 1; }
   .archive-list {
     display: flex;
     align-items: center;
@@ -232,9 +199,7 @@
     transition: transform 0.15s ease;
     color: var(--ink-light);
   }
-  .archive-list a:nth-child(even) {
-    border-radius: var(--wobble-b);
-  }
+  .archive-list a:nth-child(even) { border-radius: var(--wobble-b); }
   .archive-list a:hover {
     background-image: var(--hatch);
     transform: translateY(-2px) rotate(-1deg);
@@ -275,13 +240,8 @@
     border-radius: 48% 52% 45% 55% / 55% 45% 52% 48%;
     transition: transform 0.15s, background-color 0.15s, color 0.15s;
   }
-  .donut-toggle:hover {
-    transform: scale(1.1) rotate(-4deg);
-  }
-  .donut-toggle[aria-pressed="true"] {
-    background-color: var(--ink);
-    color: var(--paper);
-  }
+  .donut-toggle:hover { transform: scale(1.1) rotate(-4deg); }
+  .donut-toggle[aria-pressed="true"] { background-color: var(--ink); color: var(--paper); }
 
   .icon {
     width: 34px;
@@ -314,10 +274,7 @@
     transition: opacity 0.18s ease;
     z-index: 100;
   }
-  .modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
   .donut-modal {
     position: relative;
     width: 100%;
@@ -332,21 +289,11 @@
     transform: scale(0.96);
     transition: transform 0.18s ease;
   }
-  .modal-overlay.active .donut-modal {
-    transform: scale(1);
-  }
-  .note-modal {
-    max-width: 420px;
-  }
-  .faq-modal {
-    max-width: 600px;
-  }
-  .credits-modal {
-    max-width: 480px;
-  }
-  .archive-modal {
-    max-width: 360px;
-  }
+  .modal-overlay.active .donut-modal { transform: scale(1); }
+  .note-modal { max-width: 420px; }
+  .faq-modal { max-width: 600px; }
+  .credits-modal { max-width: 480px; }
+  .archive-modal { max-width: 360px; }
   .modal-close {
     position: absolute;
     top: 10px;
@@ -373,20 +320,14 @@
     flex-wrap: wrap;
   }
 
-  .faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .faq-list { display: flex; flex-direction: column; gap: 8px; }
   .faq-item {
     border: 2px solid var(--ink-light);
     border-radius: 10px 5px 11px 6px / 6px 11px 5px 10px;
     overflow: hidden;
     transition: background-color 0.3s, border-color 0.3s;
   }
-  .faq-item:nth-child(even) {
-    border-radius: 5px 11px 6px 10px / 11px 6px 10px 5px;
-  }
+  .faq-item:nth-child(even) { border-radius: 5px 11px 6px 10px / 11px 6px 10px 5px; }
   .faq-q {
     width: 100%;
     display: flex;
@@ -403,17 +344,9 @@
     text-align: left;
     cursor: pointer;
   }
-  .faq-q:hover {
-    background-image: var(--hatch);
-  }
-  .faq-arrow {
-    font-size: 12px;
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-  }
-  .faq-item.open .faq-arrow {
-    transform: rotate(180deg);
-  }
+  .faq-q:hover { background-image: var(--hatch); }
+  .faq-arrow { font-size: 12px; flex-shrink: 0; transition: transform 0.2s ease; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
   .faq-a-wrap {
     display: grid;
     grid-template-rows: 0fr;
@@ -425,10 +358,7 @@
     visibility: visible;
     transition: grid-template-rows 0.25s ease, visibility 0s;
   }
-  .faq-a {
-    overflow: hidden;
-    min-height: 0;
-  }
+  .faq-a { overflow: hidden; min-height: 0; }
   .faq-a p {
     margin: 0;
     padding: 0 12px 12px;
@@ -445,13 +375,8 @@
     color: inherit;
     cursor: pointer;
   }
-  .secret-trigger:hover {
-    text-decoration: underline dotted;
-  }
-  .secret-trigger.used {
-    cursor: default;
-    text-decoration: none;
-  }
+  .secret-trigger:hover { text-decoration: underline dotted; }
+  .secret-trigger.used { cursor: default; text-decoration: none; }
   .secret-compartment {
     display: grid;
     grid-template-rows: 0fr;
@@ -463,60 +388,29 @@
     visibility: inherit;
     transition: grid-template-rows 0.4s ease, visibility 0s;
   }
-  .secret-inner {
-    overflow: hidden;
-    min-height: 0;
-  }
-  .secret-panel {
-    margin: 4px 12px 12px;
-    padding-top: 16px;
-    border-top: 2px dashed var(--ink-light);
-  }
+  .secret-inner { overflow: hidden; min-height: 0; }
+  .secret-panel { margin: 4px 12px 12px; padding-top: 16px; border-top: 2px dashed var(--ink-light); }
 
-  .faq-item.unlocked {
-    background: #fffaf0;
-    border-color: #e8c873;
-  }
-  .faq-item.unlocked.open {
-    border-color: #d4a017;
-  }
-  .faq-item.unlocked .faq-q {
-    color: #6b5423;
-  }
-  .faq-item.unlocked .faq-q:hover {
-    background-color: #f7ecc8;
-    background-image: none;
-  }
-  .faq-item.unlocked .faq-a {
-    color: #6b5423;
-  }
-  .faq-item.unlocked .faq-a p {
-    color: #4a3a10;
-  }
-  .faq-item.unlocked .secret-panel {
-    border-top-color: #e8c873;
-  }
+  .faq-item.unlocked { background: #fffaf0; border-color: #e8c873; }
+  .faq-item.unlocked.open { border-color: #d4a017; }
+  .faq-item.unlocked .faq-q { color: #6b5423; }
+  .faq-item.unlocked .faq-q:hover { background-color: #f7ecc8; background-image: none; }
+  .faq-item.unlocked .faq-a { color: #6b5423; }
+  .faq-item.unlocked .faq-a p { color: #4a3a10; }
+  .faq-item.unlocked .secret-panel { border-top-color: #e8c873; }
   .faq-item.unlocked button.option-btn {
     border-color: #e8c873;
     background-color: #fff;
     color: #6b5423;
   }
-  .faq-item.unlocked button.option-btn:hover {
-    background-color: #f7ecc8;
-    background-image: none;
-  }
+  .faq-item.unlocked button.option-btn:hover { background-color: #f7ecc8; background-image: none; }
   .faq-item.unlocked button.option-btn.active {
     border-color: #d4a017;
     background-color: #f2dd97;
     color: #4a3a10;
   }
-  .faq-item.unlocked .clear-mini-btn {
-    color: #c0392b;
-  }
-  .faq-item.unlocked .clear-mini-btn:hover {
-    color: #8e2a1f;
-    text-decoration-style: solid;
-  }
+  .faq-item.unlocked .clear-mini-btn { color: #c0392b; }
+  .faq-item.unlocked .clear-mini-btn:hover { color: #8e2a1f; text-decoration-style: solid; }
 
   .send-section {
     display: flex;
@@ -543,10 +437,8 @@
     color: var(--ink);
     background: var(--paper);
   }
-  #note-textarea::placeholder {
-    color: var(--ink-soft);
-    opacity: 0.7;
-  }
+  #note-textarea::placeholder { color: var(--ink-soft); opacity: 0.7; }
+
   .captcha-wrap {
     display: flex;
     justify-content: center;
@@ -566,10 +458,7 @@
     pointer-events: auto;
   }
   @media (max-width: 380px) {
-    .captcha-wrap .h-captcha {
-      transform: scale(0.85);
-      transform-origin: center top;
-    }
+    .captcha-wrap .h-captcha { transform: scale(0.85); transform-origin: center top; }
   }
   #send-note-btn {
     padding: 8px 24px;
@@ -583,31 +472,14 @@
     font-family: inherit;
     transition: transform 0.15s;
   }
-  #send-note-btn:hover:not(:disabled) {
-    transform: translateY(-1px) rotate(-1deg);
-  }
-  #send-note-btn:disabled {
-    opacity: 0.6;
-    cursor: default;
-  }
-  #send-status {
-    font-size: 13px;
-    text-align: center;
-  }
-  #send-status:empty {
-    display: none;
-  }
+  #send-note-btn:hover:not(:disabled) { transform: translateY(-1px) rotate(-1deg); }
+  #send-note-btn:disabled { opacity: 0.6; cursor: default; }
+  #send-status { font-size: 13px; text-align: center; }
+  #send-status:empty { display: none; }
   #send-status.error {
     font-weight: bold;
     text-decoration: underline wavy;
     text-underline-offset: 3px;
-  }
-
-  .about-text {
-    margin: 0;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.5;
   }
 
   .credits-list {
@@ -625,16 +497,9 @@
     font-size: 14px;
     line-height: 1.45;
   }
-  .credits-list li:first-child {
-    border-top: none;
-  }
-  .credit-role {
-    flex: 0 0 88px;
-    font-weight: bold;
-  }
-  .credit-what {
-    flex: 1;
-  }
+  .credits-list li:first-child { border-top: none; }
+  .credit-role { flex: 0 0 88px; font-weight: bold; }
+  .credit-what { flex: 1; }
   .credits-note {
     margin: 14px 0 0;
     text-align: center;
@@ -650,9 +515,7 @@
     overflow: hidden;
     visibility: hidden;
   }
-  .emoji-layer.revealed {
-    visibility: visible;
-  }
+  .emoji-layer.revealed { visibility: visible; }
   .scatter-emoji {
     position: absolute;
     font-size: var(--s, 28px);
@@ -677,13 +540,13 @@
       bob 4s ease-in-out calc(var(--d, 0s) + 0.45s) infinite;
   }
   @keyframes pop-in {
-    0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
-    70%  { transform: scale(1.3) rotate(calc(var(--r, 0deg) + 6deg)); opacity: 1; }
+    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+    70% { transform: scale(1.3) rotate(calc(var(--r, 0deg) + 6deg)); opacity: 1; }
     100% { transform: scale(1) rotate(var(--r, 0deg)); opacity: 1; }
   }
   @keyframes bob {
     0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
-    50%      { transform: translateY(-6px) rotate(var(--r, 0deg)); }
+    50% { transform: translateY(-6px) rotate(var(--r, 0deg)); }
   }
 
   .emoji-layer.closing .scatter-emoji {
@@ -693,12 +556,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .emoji-layer.revealed .scatter-emoji {
-      animation: none;
-    }
-    .emoji-layer.closing .scatter-emoji {
-      transition: none;
-    }
+    .emoji-layer.revealed .scatter-emoji { animation: none; }
+    .emoji-layer.closing .scatter-emoji { transition: none; }
   }
 
   .emoji-tray {
@@ -715,9 +574,7 @@
     pointer-events: auto;
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  .emoji-layer.revealed .emoji-tray {
-    animation: tray-up 0.25s ease-out;
-  }
+  .emoji-layer.revealed .emoji-tray { animation: tray-up 0.25s ease-out; }
   .emoji-tray.gone {
     opacity: 0;
     transform: translate(-50%, 12px);
@@ -726,7 +583,7 @@
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s linear 0.4s;
   }
   @keyframes tray-up {
-    0%   { transform: translate(-50%, 12px); opacity: 0; }
+    0% { transform: translate(-50%, 12px); opacity: 0; }
     100% { transform: translate(-50%, 0); opacity: 1; }
   }
   #board-status {
@@ -748,6 +605,7 @@
     padding: 4px;
     font-family: inherit;
   }
+
   .quick-emojis {
     display: flex;
     flex-wrap: wrap;
@@ -756,9 +614,7 @@
     max-width: 240px;
     margin: 0 auto;
   }
-  .quick-emojis.locked {
-    opacity: 0.4;
-  }
+  .quick-emojis.locked { opacity: 0.4; }
   .quick-btn {
     width: 42px;
     height: 40px;
@@ -774,16 +630,9 @@
     cursor: pointer;
     transition: transform 0.15s;
   }
-  .quick-btn:nth-child(even) {
-    border-radius: var(--wobble-sm-b);
-  }
-  .quick-btn:hover {
-    background-image: var(--hatch);
-    transform: translateY(-2px);
-  }
-  .quick-btn:active {
-    transform: scale(0.9);
-  }
+  .quick-btn:nth-child(even) { border-radius: var(--wobble-sm-b); }
+  .quick-btn:hover { background-image: var(--hatch); transform: translateY(-2px); }
+  .quick-btn:active { transform: scale(0.9); }
 
   .more-toggle {
     display: block;
@@ -797,17 +646,9 @@
     color: var(--ink);
     cursor: pointer;
   }
-  .more-toggle:hover {
-    text-decoration: underline dotted;
-  }
-  .more-arrow {
-    display: inline-block;
-    font-size: 10px;
-    transition: transform 0.2s ease;
-  }
-  .more-toggle[aria-expanded="true"] .more-arrow {
-    transform: rotate(180deg);
-  }
+  .more-toggle:hover { text-decoration: underline dotted; }
+  .more-arrow { display: inline-block; font-size: 10px; transition: transform 0.2s ease; }
+  .more-toggle[aria-expanded="true"] .more-arrow { transform: rotate(180deg); }
   .more-wrap {
     display: grid;
     grid-template-rows: 0fr;
@@ -819,13 +660,8 @@
     visibility: visible;
     transition: grid-template-rows 0.3s ease, visibility 0s;
   }
-  .more-inner {
-    overflow: hidden;
-    min-height: 0;
-  }
-  .more-inner emoji-picker {
-    margin-top: 8px;
-  }
+  .more-inner { overflow: hidden; min-height: 0; }
+  .more-inner emoji-picker { margin-top: 8px; }
 
   emoji-picker {
     width: 100%;
@@ -844,9 +680,7 @@
     --button-hover-background: var(--paper-shade);
     --button-active-background: var(--paper-dots);
   }
-  emoji-picker.locked {
-    opacity: 0.4;
-  }
+  emoji-picker.locked { opacity: 0.4; }
 
   #version-tag {
     position: fixed;
@@ -859,9 +693,7 @@
     color: var(--ink-soft);
     letter-spacing: 0.3px;
   }
-  #version-tag span {
-    opacity: 0.6;
-  }
+  #version-tag span { opacity: 0.6; }
   .credits-link {
     padding: 2px 4px;
     background: none;
@@ -875,65 +707,164 @@
     cursor: pointer;
     transition: opacity 0.15s;
   }
-  .credits-link:hover {
-    opacity: 1;
-    text-decoration-style: dotted;
+  .credits-link:hover { opacity: 1; text-decoration-style: dotted; }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 32px 0 72px;
   }
-  @media (max-width: 700px) {
-    body {
-      padding: 24px 12px 56px;
-      gap: 28px;
-    }
-    .avatar {
-      width: 70px;
-      height: 70px;
-    }
-    .header h1 {
-      font-size: 38px;
-    }
-    .header p {
-      font-size: 18px;
-    }
-    .link-group span.label {
-      font-size: 17px;
-    }
-    .link-row {
-      gap: 12px;
-    }
-    .link-row a {
-      font-size: 16px;
-      padding: 9px 20px;
-    }
-    .panel-content {
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-    .credit-role {
-      flex-basis: 76px;
-    }
-    #version-tag {
-      font-size: 9px;
-    }
+  .scroll-cue {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 10px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    animation: cue-bob 2s ease-in-out infinite;
+  }
+  .scroll-cue:hover { color: var(--link-hover); }
+  .scroll-cue svg { display: block; width: 22px; height: 22px; }
+  @keyframes cue-bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(5px); }
   }
 
-    #donut-mount {
-      opacity: 1;
-      transition: opacity 0.25s ease;
-    }
-    #donut-mount.donut-fade-out {
-      opacity: 0;
-    }
-    #donut-mount.donut-fade-in {
-      opacity: 1;
-    }
-    .donut-loading {
-      padding: 10px 0;
-      text-align: center;
-      font-size: 13px;
-      color: var(--ink-soft);
-      opacity: 0.8;
-    }
+  .notes-section {
+    width: 100%;
+    max-width: 520px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 56px 0 72px;
+  }
+  .board-list { display: flex; flex-direction: column; gap: 12px; }
+  .board-item {
+    position: relative;
+    background-color: var(--paper);
+    border: 2px solid var(--ink-light);
+    border-radius: 10px 5px 11px 6px / 6px 11px 5px 10px;
+    padding: 12px 14px 24px 14px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease var(--d, 0ms), transform 0.5s ease var(--d, 0ms);
+  }
+  .board-item:nth-child(even) { border-radius: 5px 11px 6px 10px / 11px 6px 10px 5px; }
+  .board-item.in { opacity: 1; transform: none; }
+  .board-q,
+  .board-a {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .board-q { color: var(--ink-soft); }
+  .board-a {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px dashed var(--ink-light);
+    opacity: 0;
+    transition: opacity 0.5s ease calc(var(--d, 0ms) + 350ms);
+  }
+  .board-item.in .board-a { opacity: 1; }
+  .board-item.seen, .board-item.seen .board-a { transition: none; }
+  .board-who { font-weight: bold; margin-right: 4px; }
+  
+  .board-date {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 10px;
+    color: var(--ink-soft);
+    opacity: 0.65;
+  }
+
+  .board-empty {
+    margin: 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue { animation: none; }
+    .board-item, .board-a { opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 700px) {
+    body { padding: 0 12px; }
+    .hero { padding-top: 24px; gap: 28px; }
+    .avatar { width: 70px; height: 70px; }
+    .header h1 { font-size: 38px; }
+    .header p { font-size: 18px; }
+    .link-group span.label { font-size: 17px; }
+    .link-row { gap: 12px; }
+    .link-row a { font-size: 16px; padding: 9px 20px; }
+    .panel-content { flex-direction: column; align-items: center; gap: 20px; }
+    .credit-role { flex-basis: 76px; }
+    #version-tag { font-size: 9px; }
+  }
+
+  #donut-mount { transition: opacity 0.25s ease; }
+  #donut-mount.donut-fade-out { opacity: 0; }
+  .donut-loading {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    opacity: 0.8;
+  }
+
+  .public-check {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .public-check input {
+    appearance: none;
+    flex: none;
+    display: grid;
+    place-content: center;
+    width: 18px;
+    height: 18px;
+    margin: 1px 0 0;
+    border: 2px solid var(--ink-light);
+    border-radius: var(--wobble-sm-a);
+    background: var(--paper);
+    cursor: pointer;
+  }
+  .public-check input::after {
+    content: "✓";
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+    color: var(--ink);
+    transform: scale(0);
+    transition: transform 0.12s;
+  }
+  .public-check input:checked { border-color: var(--ink); }
+  .public-check input:checked::after { transform: scale(1); }
 </style>
 </head>
 <body>
@@ -953,6 +884,7 @@
     <path d="M16.2 4.8C21 4.3 27 4.6 31.8 4.4C35.4 4.6 35.5 11.6 31.8 11.9L30.4 12C30.2 16 30.6 19 30.2 22C30 24.4 32.6 25.8 34.6 27C36.4 28 38 28.6 38 31.4L38.2 34.4C30 35 18 34.2 10 34.6L10.2 31.2C10.2 28.6 12 28 13.6 27C15.8 25.8 18 24.6 17.8 22C17.6 19 18 16 17.8 12.2L16.4 12C12.6 11.8 12.8 5 16.2 4.8Z"/>
     <path d="M24 34.6C24.2 38 23.8 41 24.1 44.2"/>
   </symbol>
+
   <filter id="emoji-outline" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
     <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="thick"/>
     <feFlood style="flood-color: var(--ink)"/>
@@ -964,6 +896,7 @@
   </filter>
 </svg>
 
+<div class="hero">
 <div class="header">
   <button id="avatar-btn" class="avatar-btn" type="button" aria-label="switch between day and night mode" aria-pressed="false">
     <img id="avatar" class="avatar" src="images/icon.png" alt="" draggable="false" oncontextmenu="return false;" data-day="images/icon.png" data-night="images/icon2.png" onerror="if (this.src.endsWith(this.dataset.night)) { this.src = this.dataset.day; } else { this.parentNode.style.display = 'none'; }">
@@ -1003,6 +936,16 @@
   </button>
 </div>
 
+  <button type="button" class="scroll-cue" aria-label="view public notes">
+    <span>public notes</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<section id="notes-box" aria-label="public notes"></section>
+
 <div id="archive-modal-overlay" class="modal-overlay">
   <div class="donut-modal archive-modal" role="dialog" aria-modal="true" aria-label="archived accounts">
     <button class="modal-close" aria-label="close">✕</button>
@@ -1020,7 +963,6 @@
     <button class="modal-close" aria-label="close">✕</button>
     <p class="modal-title">frequently asked questions</p>
     <div class="faq-list">
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1">
           <span>are your commissions open?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1029,7 +971,6 @@
           <div class="faq-a"><p>check my vgen for my current status!</p></div>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2">
           <span>how can i commission you?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1038,7 +979,6 @@
           <div class="faq-a"><p>you can go through vgen or ko-fi, which are both connected to my paypal for payment.</p><p>for updates and other inquiries, you can contact me on twitter or discord (same username). to make sure you don't get marked for spam, include <b>"cheesecake"</b> in your message. otherwise i might ignore it.</p></div>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3">
           <span>what's your setup?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1047,7 +987,6 @@
           <div class="faq-a"><p>i use a Huion Kamvas 13 GS1331 since 2023.</p></div>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4">
           <span>what programs do you use?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1056,17 +995,14 @@
           <div class="faq-a"><p>i use krita for the main drawing and adobe photoshop cs5 for final tweaks.</p></div>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5">
           <span>can i use / repost your art?</span><span class="faq-arrow" aria-hidden="true">▼</span>
         </button>
         <div class="faq-a-wrap" id="faq-a5">
-          <div class="faq-a"><p><b>yes!</b> you're free to use them as a dp, header, etc — but please credit me (or at the very least don't remove my signature).</p><p>reposting my artwork is allowed if you 1) ASK ME FIRST, 2) do NOT pose as me, 3) do not remove my credits, and 4) do not repost on the same platforms i'm active on.</p>
-          </div>
+          <div class="faq-a"><p><b>yes!</b> you're free to use them as a dp, header, etc — but please credit me (or at the very least don't remove my signature).</p><p>reposting my artwork is allowed if you 1) ASK ME FIRST, 2) do NOT pose as me, 3) do not remove my credits, and 4) do not repost on the same platforms i'm active on.</p></div>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a6">
           <span>what's the <svg class="icon icon-inline" aria-hidden="true"><use href="#icon-pin"/></svg> for?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1075,7 +1011,6 @@
           <div class="faq-a"><p>it shows the emojis other visitors have left on the page (might not work in all browsers). you can add any emoji once a day!</p></div>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a7">
           <span>didn't you use to make youtube videos?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1084,7 +1019,6 @@
           <div class="faq-a"><p><a href="https://www.youtube.com/@FrizzleLamb/" target="_blank" rel="noopener noreferrer">yes. . .</a> but i've retired ever since youtube updated their TOS which consequently pulled me out of their monetization program, so it wasn't worth it anymore.</p></div>
         </div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a8">
           <span>where did the donutmaker go?</span><span class="faq-arrow" aria-hidden="true">▼</span>
@@ -1092,18 +1026,14 @@
         <div class="faq-a-wrap" id="faq-a8">
           <div class="faq-a">
             <p><button id="secret-trigger" class="secret-trigger" type="button">what donutmaker</button></p>
-
             <div id="secret-compartment" class="secret-compartment">
               <div class="secret-inner">
-                <div class="panel-content secret-panel" id="donut-mount">
-                </div>
+                <div class="panel-content secret-panel" id="donut-mount"></div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -1112,8 +1042,12 @@
   <div class="donut-modal note-modal" role="dialog" aria-modal="true" aria-label="send me a note">
     <button class="modal-close" aria-label="close">✕</button>
     <div class="send-section">
-      <span class="label">send me a note! i won't be able to reply directly, but i read every single one :)</span>
+      <span class="label">send me a note! i sometimes won't be able to reply directly, but i read every single one :)</span>
       <textarea id="note-textarea" placeholder="ask or tell me something..."></textarea>
+      <label class="public-check">
+        <input type="checkbox" id="note-public">
+        <span>post publicly? (anonymous)</span>
+      </label>
       <div class="captcha-wrap">
         <div class="h-captcha" data-captcha="true"></div>
       </div>
@@ -1164,7 +1098,7 @@
 
 <div id="version-tag">
   <button class="credits-link" type="button" data-open="credits-modal-overlay" aria-haspopup="dialog" aria-expanded="false">credits</button>
-  <span>v2.2.1</span>
+  <span>v2.3</span>
 </div>
 
 <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
@@ -1218,6 +1152,7 @@ avatarBtn.addEventListener('click', () => {
   else document.documentElement.removeAttribute('data-theme');
   avatarImg.src = goNight ? avatarImg.dataset.night : avatarImg.dataset.day;
   avatarBtn.setAttribute('aria-pressed', String(goNight));
+
   pickerEl.classList.toggle('dark', goNight);
   pickerEl.classList.toggle('light', !goNight);
 });
@@ -1284,6 +1219,12 @@ const sendBtn = document.getElementById('send-note-btn');
 const statusEl = document.getElementById('send-status');
 const noteTextarea = document.getElementById('note-textarea');
 const captchaWrap = document.querySelector('.captcha-wrap');
+const publicBox = document.getElementById('note-public');
+
+noteTextarea.addEventListener('input', () => {
+  if (noteTextarea.value.trim()) captchaWrap.classList.add('show');
+});
+
 sendBtn.addEventListener('click', async () => {
   statusEl.classList.remove('error');
   const note = noteTextarea.value.trim();
@@ -1292,15 +1233,17 @@ sendBtn.addEventListener('click', async () => {
     statusEl.classList.add('error');
     return;
   }
-  const captchaBox = document.querySelector('#note-modal-overlay textarea[name="h-captcha-response"]');
+  const captchaBox = document.querySelector('#note-modal-overlay [name="h-captcha-response"]');
   const captchaToken = captchaBox ? captchaBox.value : '';
   if (!captchaToken) {
     captchaWrap.classList.add('show');
-    statusEl.textContent = "HOLD IT! complete the challenge first, then send the note.";
+    statusEl.textContent = "";
     return;
   }
   sendBtn.disabled = true;
   statusEl.textContent = "sending...";
+  const isPublic = publicBox.checked;
+  const finalMessage = isPublic ? note + "\n\n(post)" : note;
   try {
     const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
@@ -1308,20 +1251,25 @@ sendBtn.addEventListener('click', async () => {
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
         subject: "someone left a note on frizzlelamb.github.io!",
-        message: note,
+        message: finalMessage,
         "h-captcha-response": captchaToken
       })
     });
-    const result = await res.json();
-    if (result.success) {
+    const raw = await res.text();
+    let result = null;
+    try { result = JSON.parse(raw); } catch (e) {}
+    if (res.ok && result && result.success) {
       statusEl.textContent = "sent! thank you, and have a good day.";
       noteTextarea.value = '';
       captchaWrap.classList.remove('show');
+      publicBox.checked = false;
     } else {
-      statusEl.textContent = "hmm, something went wrong. try again?";
+      console.error("Web3Forms replied:", res.status, raw);
+      statusEl.textContent = (result && result.message) ? result.message : "hmm, something went wrong. try again?";
       statusEl.classList.add('error');
     }
   } catch (err) {
+    console.error("Note failed to send:", err);
     statusEl.textContent = "beep boop? try again.";
     statusEl.classList.add('error');
   } finally {
@@ -1345,10 +1293,9 @@ function playSound(audioEl) {
   clone.play().catch(() => {});
 }
 
-const interactiveEls = document.querySelectorAll(
-  '.donut-toggle, .faq-q, .option-btn, #send-note-btn, .clear-mini-btn, .link-row a, .credits-link, .archive-link, #avatar-btn'
-);
-interactiveEls.forEach(el => {
+document.querySelectorAll(
+  '.donut-toggle, .faq-q, #send-note-btn, .link-row a, .credits-link, .archive-link, #avatar-btn, .scroll-cue'
+).forEach(el => {
   el.addEventListener('click', () => playSound(el === avatarBtn ? switchSound : clickSound));
 });
 
@@ -1392,7 +1339,6 @@ secretTrigger.addEventListener('click', async () => {
       donutMount.innerHTML = html;
       window.initDonut();
       donutMount.classList.remove('donut-fade-out');
-      donutMount.classList.add('donut-fade-in');
     } catch (err) {
       console.error('Donut maker failed to load:', err);
       donutMount.innerHTML = '<p>oh no! the donutmaker is gone, sorry!</p>';
@@ -1521,7 +1467,6 @@ function formatWait(ms) {
   if (hours) return `${hours}h`;
   return `${minutes}m`;
 }
-
 
 function setPickerEnabled(enabled) {
   picker.classList.toggle('locked', !enabled);
@@ -1759,14 +1704,27 @@ async function sendEmoji(emoji) {
   }
 }
 
-let firebaseDb = null;
-async function initFirebase() {
-  if (firebaseDb) return firebaseDb;
-  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
-  fb = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js");
-  const app = initializeApp(firebaseConfig);
-  firebaseDb = fb.getDatabase(app);
-  return firebaseDb;
+const shownNotes = new Set();
+const noteObserver = new IntersectionObserver((entries) => {
+  let n = 0;
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    el.style.setProperty('--d', `${n++ * 120}ms`);
+    el.classList.add('in');
+    shownNotes.add(el.dataset.key);
+    noteObserver.unobserve(el);
+  });
+}, { threshold: 0.2 });
+
+let dbPromise = null;
+function initFirebase() {
+  dbPromise ??= (async () => {
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+    fb = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js");
+    return fb.getDatabase(initializeApp(firebaseConfig));
+  })();
+  return dbPromise;
 }
 
 async function connect() {
@@ -1796,8 +1754,95 @@ async function connect() {
   }
 }
 
+function renderNotes(list, items) {
+  noteObserver.disconnect();
+  list.textContent = '';
+  if (!items.length) {
+    const p = document.createElement('p');
+    p.className = 'board-empty';
+    p.textContent = "nothing here yet, check back soon!";
+    list.appendChild(p);
+    return;
+  }
+  items.forEach((it) => {
+    const card = document.createElement('div');
+    card.className = 'board-item';
+    card.dataset.key = it.key;
+
+    const qP = document.createElement('p');
+    qP.className = 'board-q';
+    const qLabel = document.createElement('span');
+    qLabel.className = 'board-who';
+    qLabel.textContent = 'anonymous:';
+    qP.append(qLabel, it.q);
+
+    const aP = document.createElement('p');
+    aP.className = 'board-a';
+    const aLabel = document.createElement('span');
+    aLabel.className = 'board-who';
+    aLabel.textContent = 'me:';
+    const aText = document.createElement('span');
+    aText.innerHTML = it.a;
+    aP.append(aLabel, aText);
+
+    card.append(qP, aP);
+
+    if (it.key) {
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'board-date';
+      const timestampNum = Number(it.key);
+      if (!isNaN(timestampNum) && timestampNum > 0) {
+        const d = new Date(timestampNum);
+        dateSpan.textContent = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+      card.appendChild(dateSpan);
+    }
+
+    list.appendChild(card);
+    if (shownNotes.has(it.key)) card.classList.add('seen', 'in');
+    else noteObserver.observe(card);
+  });
+}
+
+async function loadNotes(list) {
+  try {
+    const db = await initFirebase();
+    fb.onValue(fb.ref(db, 'board'), (snap) => {
+      const items = [];
+      snap.forEach((child) => {
+        const d = child.val();
+        if (d && typeof d.q === 'string' && typeof d.a === 'string') {
+          items.push({ key: child.key, q: d.q, a: d.a });
+        }
+      });
+      items.sort((x, y) => Number(y.key) - Number(x.key));
+      renderNotes(list, items);
+    }, (err) => {
+      console.error("Can't read the answered notes:", err);
+      list.textContent = "the board can't load right now, sorry!";
+    });
+  } catch (err) {
+    console.error("Notes failed to load:", err);
+    list.textContent = "the board can't load right now, sorry!";
+  }
+}
+
+let notesOpened = false;
+document.querySelector('.scroll-cue').addEventListener('click', () => {
+  const box = document.getElementById('notes-box');
+  if (!notesOpened) {
+    notesOpened = true;
+    box.className = 'notes-section';
+    box.innerHTML = '<div class="board-list"><p class="board-empty">loading...</p></div>';
+    loadNotes(box.querySelector('.board-list'));
+  }
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(() => box.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' }));
+});
+
 connect();
 </script>
+
 <script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
 </html>
