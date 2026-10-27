@@ -1781,7 +1781,7 @@ function renderNotes(list, items) {
     aP.className = 'board-a';
     const aLabel = document.createElement('span');
     aLabel.className = 'board-who';
-    aLabel.textContent = 'me:';
+    aLabel.textContent = ''; /* me: */
     const aText = document.createElement('span');
     aText.innerHTML = it.a;
     aP.append(aLabel, aText);
