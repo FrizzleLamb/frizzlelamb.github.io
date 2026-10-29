@@ -750,7 +750,7 @@
 
   .notes-section {
     width: 100%;
-    max-width: 520px;
+    max-width: 720px;
     min-height: 100vh;
     min-height: 100dvh;
     padding: 56px 0 72px;
@@ -759,7 +759,7 @@
   .board-item {
     position: relative;
     background-color: var(--paper);
-    border: 2px solid var(--ink-light);
+    border: 2px solid var(--ink);
     border-radius: 10px 5px 11px 6px / 6px 11px 5px 10px;
     padding: 12px 14px 24px 14px;
     opacity: 0;
@@ -771,7 +771,7 @@
   .board-q,
   .board-a {
     margin: 0;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.45;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
@@ -803,8 +803,68 @@
     font-size: 13px;
     color: var(--ink-soft);
   }
+
+  .view-more-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .view-more-btn {
+    background-color: var(--paper);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: var(--wobble-a);
+    padding: 8px 20px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: var(--soft-shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .view-more-btn:hover {
+    background-image: var(--hatch);
+    transform: translateY(-2px) rotate(-1deg);
+    box-shadow: 0 4px 8px rgba(20, 32, 25, 0.16);
+  }
+  .view-more-btn:active { transform: translateY(0); box-shadow: 0 1px 3px rgba(20, 32, 25, 0.12); }
+
+  .back-to-top {
+    position: fixed;
+    right: 16px;
+    bottom: 32px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    background-color: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: var(--wobble-a);
+    box-shadow: var(--soft-shadow);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+  }
+  .back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.25s ease, visibility 0s;
+  }
+  .back-to-top.show:active { opacity: 0.65; }
+  @media (hover: hover) {
+    .back-to-top.show:hover { opacity: 0.65; }
+  }
+  .back-to-top svg { display: block; width: 22px; height: 22px; }
+
   @media (prefers-reduced-motion: reduce) {
     .scroll-cue { animation: none; }
+    .back-to-top { transition: none; }
     .board-item, .board-a { opacity: 1; transform: none; transition: none; }
   }
 
@@ -1097,10 +1157,53 @@
   </div>
 </div>
 
+<div id="privacy-modal-overlay" class="modal-overlay">
+  <div class="donut-modal faq-modal" role="dialog" aria-modal="true" aria-label="privacy policy">
+    <button class="modal-close" aria-label="close">✕</button>
+    <p class="modal-title">privacy policy</p>
+    
+    <div style="font-size: 13px; line-height: 1.6; color: var(--ink);">
+      <p>this privacy policy outlines how information is handled when you visit this site or use the interactive features.</p>
+
+      <h3 style="font-size: 14px; margin: 16px 0 6px; font-weight: bold;">1. information collection</h3>
+      <p>when you submit a message through the anonymous note form or post an emoji on the interactive wall, third-party infrastructure providers and hosting services may automatically log technical data, including your Internet Protocol (IP) address and timestamps. this is standard for web traffic routing, spam prevention, and security enforcement.</p>
+      <p>messages submitted publicly may be visible to other visitors. please refrain from submitting sensitive personal data.</p>
+
+      <h3 style="font-size: 14px; margin: 16px 0 6px; font-weight: bold;">2. third-party services</h3>
+      <p>this website runs on trusted third-party services. they operate under their respective privacy policies governing data handling and security safeguards:</p>
+      <ul style="margin: 0 0 12px 20px; padding: 0;">
+        <li><strong>Github Pages:</strong> for website hosting and server log management.</li>
+        <li><strong>Firebase (Google):</strong> for real-time database functions (i.e. note storage).</li>
+        <li><strong>Web3Forms:</strong> for processing contact form submissions.</li>
+      </ul>
+
+      <h3 style="font-size: 14px; margin: 16px 0 6px; font-weight: bold;">3. use of data</h3>
+      <p>i will not sell or monetize your personal data. any technical metadata captured by backend services are used strictly for:</p>
+      <ul style="margin: 0 0 12px 20px; padding: 0;">
+        <li>preventing spam, bot attacks, and malicious abuse of the anonymous notes.</li>
+        <li>ensuring the technical stability and secure operation of the database and web host.</li>
+      </ul>
+
+      <h3 style="font-size: 14px; margin: 16px 0 6px; font-weight: bold;">4. cookies and local storage</h3>
+      <p>this website does not use tracking or advertising cookies. if you wish to submit a data removal request, please contact me via the primary contact links on the main page.</p>
+
+      <p class="credits-note">this policy is structured in accordance with standard global data transparency principles (adapted from <a href="https://gdpr-info.eu/art-13-gdpr/" target="_blank" rel="noopener noreferrer">GDPR Article 13/14</a> and <a href="https://www.oag.ca.gov/privacy/ccpa" target="_blank" rel="noopener noreferrer">CCPA</a> notice requirements).</p>
+    </div>
+  </div>
+</div>
+
 <div id="version-tag">
   <button class="credits-link" type="button" data-open="credits-modal-overlay" aria-haspopup="dialog" aria-expanded="false">credits</button>
-  <span>v2.3</span>
+  <span>•</span>
+  <button class="credits-link" type="button" data-open="privacy-modal-overlay" aria-haspopup="dialog" aria-expanded="false">privacy policy</button>
+  <span>v2.4.1</span>
 </div>
+
+<button id="back-to-top" class="back-to-top" type="button" aria-label="back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M5 15l7-7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 
 <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
 <audio id="close-sound" src="sounds/close.mp3" preload="auto"></audio>
@@ -1176,9 +1279,6 @@ document.querySelectorAll('.faq-q').forEach(btn => {
       }, 260);
     }
   });
-});
-document.querySelectorAll('.faq-q a').forEach(link => {
-  link.addEventListener('click', (e) => e.stopPropagation());
 });
 
 let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
@@ -1285,8 +1385,8 @@ const secretSound = document.getElementById('secret-sound');
 const switchSound = document.getElementById('switch-sound');
 clickSound.volume = 0.5;
 closeSound.volume = 0.5;
-secretSound.volume = 0.4;
-switchSound.volume = 0.35;
+secretSound.volume = 0.5;
+switchSound.volume = 0.45;
 
 function playSound(audioEl) {
   const clone = audioEl.cloneNode();
@@ -1352,11 +1452,7 @@ secretTrigger.addEventListener('click', async () => {
 const firebaseConfig = {
   authDomain: "frizzlelamb-s-website.firebaseapp.com",
   databaseURL: "https://frizzlelamb-s-website-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "frizzlelamb-s-website",
-  storageBucket: "frizzlelamb-s-website.firebasestorage.app",
-  messagingSenderId: "393478386161",
-  appId: "1:393478386161:web:a697e298a6e3dc25175450",
-  measurementId: "G-69MYV8V2C2"
+  projectId: "frizzlelamb-s-website"
 };
 
 import("https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js")
@@ -1755,9 +1851,20 @@ async function connect() {
   }
 }
 
+const backToTop = document.getElementById('back-to-top');
+backToTop.addEventListener('click', () => {
+  playSound(clickSound);
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+});
+
+let visibleCount = 6;
+
 function renderNotes(list, items) {
   noteObserver.disconnect();
   list.textContent = '';
+  backToTop.classList.toggle('show', notesOpened);
+
   if (!items.length) {
     const p = document.createElement('p');
     p.className = 'board-empty';
@@ -1765,7 +1872,10 @@ function renderNotes(list, items) {
     list.appendChild(p);
     return;
   }
-  items.forEach((it) => {
+
+  const visibleItems = items.slice(0, visibleCount);
+
+  visibleItems.forEach((it) => {
     const card = document.createElement('div');
     card.className = 'board-item';
     card.dataset.key = it.key;
@@ -1781,7 +1891,7 @@ function renderNotes(list, items) {
     aP.className = 'board-a';
     const aLabel = document.createElement('span');
     aLabel.className = 'board-who';
-    aLabel.textContent = ''; /* me: */
+    aLabel.textContent = '>'; /* me: */
     const aText = document.createElement('span');
     aText.innerHTML = it.a;
     aP.append(aLabel, aText);
@@ -1816,6 +1926,24 @@ function renderNotes(list, items) {
     if (shownNotes.has(it.key)) card.classList.add('seen', 'in');
     else noteObserver.observe(card);
   });
+
+  if (visibleCount < items.length) {
+    const wrap = document.createElement('div');
+    wrap.className = 'view-more-wrap';
+
+    const moreBtn = document.createElement('button');
+    moreBtn.type = 'button';
+    moreBtn.className = 'view-more-btn';
+    moreBtn.textContent = 'view more ▼';
+    moreBtn.addEventListener('click', () => {
+      playSound(clickSound);
+      visibleCount += 5;
+      renderNotes(list, items);
+    });
+
+    wrap.appendChild(moreBtn);
+    list.appendChild(wrap);
+  }
 }
 
 async function loadNotes(list) {
@@ -1843,11 +1971,13 @@ async function loadNotes(list) {
 
 let notesOpened = false;
 document.querySelector('.scroll-cue').addEventListener('click', () => {
+  visibleCount = 6;
   const box = document.getElementById('notes-box');
   const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (notesOpened) {
     notesOpened = false;
+    backToTop.classList.remove('show');
     playSound(closeSound);
     window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
     box.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
